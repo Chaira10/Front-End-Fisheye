@@ -17,11 +17,12 @@
       <div class="photograph-header" id="photographer-container">
         <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
       </div>
+      <div id="media-container"></div>
     </main>
     <div id="contact_modal">
 			<div class="modal">
 				<header>
-          <h2>Contactez-moi</h2>
+          <h2 id="title-modal">Contactez-moi</h2>
           <img src="assets/icons/close.svg" onclick="closeModal()" />
         </header>
 				<form>
@@ -35,6 +36,7 @@
 		</div>
     <script src="/scripts/pages/photographer.js"></script>
     <script src="scripts/factories/photographer.js"></script>
+    <script src="scripts/factories/media.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
   </body>
 </html>

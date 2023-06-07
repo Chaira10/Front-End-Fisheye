@@ -79,6 +79,56 @@ displayPhotographerData();
 /* ================  main page photographe  ============= */
 /* ====================================================== */
 
+// ...
+
+// 5. Récupérer les médias du photographe en utilisant sa fonctionnalité spécifique
+async function getPhotographerMedia(photographerId) {
+    try {
+        // Effectue une requête HTTP GET pour récupérer les données des photographes
+        const response = await fetch("../../data/photographers.json");
+        const data = await response.json();
+
+        // Récupère le tableau des médias à partir des données
+        const mediaData = data.media;
+
+        // Filtrer les médias pour récupérer uniquement ceux du photographe spécifié par son ID
+        const photographerMedia = mediaData.filter(media => media.photographerId == photographerId);
+
+        // Retourne les médias du photographe
+        return photographerMedia;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+// ...
+
+// 7. Utilisez la fonction mediaFactory pour créer des cartes de médias à partir des données récupérées et insérez-les dans le DOM
+async function displayPhotographerMedia() {
+    // Récupère les médias du photographe en utilisant la fonction getPhotographerMedia() avec l'ID du photographe (photographeId)
+    const photographerMedia = await getPhotographerMedia(photographeId);
+
+    // Récupère l'élément du DOM dans lequel les médias doivent être affichés
+    const mediaContainer = document.getElementById('media-container');
+
+    // Parcours chaque média du photographe
+    photographerMedia.forEach(mediaData => {
+        // Utilise la fonction mediaFactory pour créer un modèle de média basé sur les données du média
+        const mediaModel = mediaFactory(mediaData);
+
+        // Obtient la carte de média (élément DOM) en appelant la fonction getMediaCardDOM() du modèle de média
+        const mediaCard = mediaModel.getMediaCardDOM();
+
+        // Ajoute la carte de média à l'élément 'media-container' dans le DOM
+        mediaContainer.appendChild(mediaCard);
+    });
+}
+
+// Appelle la fonction displayPhotographerMedia() pour afficher les médias du photographe
+displayPhotographerMedia();
+
+// ...
 
 
 

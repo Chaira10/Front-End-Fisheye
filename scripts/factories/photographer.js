@@ -1,76 +1,65 @@
 function photographerFactory(data) {
-    const { name,id, city, country, tagline, price, portrait } = data;
+    const { name, id, city, country, tagline, price, portrait } = data;
 
     const picture = `assets/photographers/PhotographersID/${portrait}`;
 
     function getUserCardDOM() {
-        // creation de l'élément article
-        const article = document.createElement( 'article' );
-        article.classList.add('photographer-card', 'card-photographer'); // Ajout d'une classe à l'élément <article>
+        // Crée un élément <article> pour représenter la carte du photographe
+        const article = document.createElement('article');
+        article.classList.add('photographer-card', 'card-photographer'); // Ajoute des classes à l'élément <article>
 
-        // creation div img
+        // Crée une div pour contenir l'image du photographe
         const divImg = document.createElement('div');
         divImg.classList.add('img-container', 'container-img');
-        // creation de la balise img
-        const img = document.createElement( 'img' );
-        img.classList.add('card-img', 'img'); // Ajout d'une classe à l'élément <img>
-        // ajout de l'attribut scr + chemin
-        img.setAttribute("src", picture);
-        img.setAttribute('alt', name); // Ajout de l'attribut "alt" avec la même valeur que "name"
-        img.setAttribute('data-id', id); // Ajout de l'attribut data-id 
-        img.setAttribute('id', 'img-card'); // Ajout de l'attribut id 
-        //ajout de l'image dans la balise article
-        divImg.appendChild(img);
-        article.appendChild(divImg);
+        
+        // Crée un élément <img> pour l'image du photographe
+        const img = document.createElement('img');
+        img.classList.add('card-img', 'img'); // Ajoute des classes à l'élément <img>
+        img.setAttribute('src', picture); // Définit l'attribut "src" avec le chemin de l'image
+        img.setAttribute('alt', name); // Définit l'attribut "alt" avec la valeur du nom
+        img.setAttribute('data-id', id); // Définit l'attribut "data-id" avec la valeur de l'ID
+        img.setAttribute('id', 'img-card'); // Définit l'attribut "id" avec la valeur "img-card"
+        divImg.appendChild(img); // Ajoute l'image à la div d'images
+        article.appendChild(divImg); // Ajoute la div d'images à l'élément <article>
 
-        // creation de la div text
+        // Crée une div pour le texte des informations du photographe
         const div = document.createElement('div');
         div.classList.add('card-text', 'text-card');
-        // creation de l'élément h2
-        const h2 = document.createElement( 'h2' );
-        h2.classList.add('card-name', 'name-card'); // Ajout d'une classe à l'élément <h2>
-        // ajout du nom dans le h2
-        h2.textContent = name;
-        // ajout du h2 dans la div
-        div.appendChild(h2);
-        //ajout du nom dans la balise article
 
-        // article.appendChild(h2);
+        // Crée un élément <h2> pour le nom du photographe
+        const h2 = document.createElement('h2');
+        h2.classList.add('card-name', 'name-card'); // Ajoute des classes à l'élément <h2>
+        h2.textContent = name; // Définit le contenu textuel avec le nom du photographe
+        div.appendChild(h2); // Ajoute le <h2> à la div de texte
 
-        // creation de la balise span
-        const span1 = document.createElement( 'span' );
-        span1.classList.add('card-city', 'city-card'); // Ajout d'une classe à l'élément <span>
-        // ajout de la ville et du pays dans le span
-        span1.textContent = ` ${city}, ${country}`;
-        // ajout du span dans la balise article
-        // article.appendChild( span1 );
-        div.appendChild( span1 );
+        // Crée un élément <span> pour la ville et le pays du photographe
+        const span1 = document.createElement('span');
+        span1.classList.add('card-city', 'city-card'); // Ajoute des classes à l'élément <span>
+        span1.textContent = ` ${city}, ${country}`; // Définit le contenu textuel avec la ville et le pays
+        div.appendChild(span1); // Ajoute le <span> à la div de texte
 
-        // creation de la balise p
-        const p1 = document.createElement( 'p' );
-        p1.classList.add('card-tagline', 'tagline-card'); // Ajout d'une classe à l'élément <p>
-        // ajout de la tagline dans le p
-        p1.textContent = tagline;
-        // ajout du p dans la balise article
-        // article.appendChild(p1);
-        div.appendChild(p1);
+        // Crée un élément <p> pour la tagline du photographe
+        const p1 = document.createElement('p');
+        p1.classList.add('card-tagline', 'tagline-card'); // Ajoute des classes à l'élément <p>
+        p1.textContent = tagline; // Définit le contenu textuel avec la tagline
+        div.appendChild(p1); // Ajoute le <p> à la div de texte
 
-        // creation de la balise p
-        const p2 = document.createElement( 'p' );
-        p2.classList.add('card-price', 'price-card'); // Ajout d'une classe à l'élément <p>
-        // ajout du prix dans le p
-        p2.textContent = ` ${price}$ / jour`;
-        // ajout du p dans la balise article
-        // article.appendChild( p2 );
-        div.appendChild( p2 );
-        article.appendChild( div );
+        // Crée un élément <p> pour le prix du photographe
+        const p2 = document.createElement('p');
+        p2.classList.add('card-price', 'price-card'); // Ajoute des classes à l'élément <p>
+        p2.textContent = ` ${price}$ / jour`; // Définit le contenu textuel avec le prix
+        div.appendChild(p2); // Ajoute le <p> à la div de texte
 
-        // Ajout de l'événement de clic sur l'image pour naviguer vers la page du photographe
+        article.appendChild(div); // Ajoute la div de texte à l'élément <article>
+
+        // Ajoute un événement de clic sur l'image pour naviguer vers la page du photographe
         img.addEventListener('click', () => {
-        window.location.href = `photographer.html?id=${id}`;
+            window.location.href = `photographer.html?id=${id}`;
         });
 
-        return (article);
+        return article; // Retourne l'élément <article> représentant la carte du photographe
     }
-    return { name,id, city, country, tagline, price, picture, getUserCardDOM }
+    
+    // Retourne un objet contenant les informations du photographe et la fonction getUserCardDOM()
+    return { name, id, city, country, tagline, price, picture, getUserCardDOM };
 }
