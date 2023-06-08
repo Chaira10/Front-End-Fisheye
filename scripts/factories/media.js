@@ -3,6 +3,7 @@ function mediaFactory(data) {
 
     function getMediaCardDOM() {
         const mediaContainer = document.createElement('div');
+        mediaContainer.setAttribute('data-id', id);
         mediaContainer.classList.add('media-card');
 
         if (image) {
@@ -23,6 +24,9 @@ function mediaFactory(data) {
             videoElement.setAttribute('controls', '');
             mediaContainer.appendChild(videoElement);
         }
+
+
+
 
         const titleElement = document.createElement('h3');
         titleElement.classList.add('media-title');

@@ -18,6 +18,24 @@
         <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
       </div>
       <div id="media-container"></div>
+      <!-- Structure de la lightbox -->
+<!-- Structure de la lightbox -->
+<div id="lightbox" class="lightbox">
+  <div class="lightbox-content">
+    <div id="lightbox" style="display: none;">
+      <div class="lightbox-content">
+        <div class="media-container"></div>
+        <div class="button-container">
+          <button id="closeButton">Fermer</button>
+          <button id="prevButton">Précédent</button>
+          <button id="nextButton">Suivant</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     </main>
     <div id="contact_modal">
 			<div class="modal">
@@ -37,6 +55,7 @@
     <script src="/scripts/pages/photographer.js"></script>
     <script src="scripts/factories/photographer.js"></script>
     <script src="scripts/factories/media.js"></script>
+    <script src="/scripts/utils/lightbox.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
   </body>
 </html>
