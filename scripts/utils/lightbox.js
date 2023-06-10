@@ -5,13 +5,17 @@ let currentMediaIndex = 0; // Index du média actuellement affiché dans la ligh
 // Fonction pour ouvrir la lightbox avec le média spécifié
 function openLightbox(mediasData , e) {
     // console.log(e.target.parentElement.dataset.id);
-    let index = mediasData.findIndex(m => m.id === parseInt(e.target.parentElement.dataset.id));
+
+    let index = e?.target ? mediasData.findIndex(m => m.id === parseInt(e.target.parentElement.dataset.id)) : e
     console.log(index);
   // Récupérer l'élément de la lightbox
   const lightbox = document.getElementById('lightbox');
 
   // Récupérer l'élément pour afficher le média
   const lightboxContent = document.querySelector('.lightbox-content');
+
+  
+
 
   // Mettre à jour l'index du média actuellement affiché
   currentMediaIndex = index;
@@ -21,36 +25,66 @@ function openLightbox(mediasData , e) {
 // const media = mediaFactory(mediaData[currentMediaIndex]);
 
   console.log(media);
-  let lightboxMedia;
+  let lightboxMedia = document.createElement('div');
+  lightboxMedia.classList.add('lightbox-medias');
+
+  let title = document.createElement('h2');
+  title.classList.add('lightbox-title');
 
 //   Vérifier si la propriété 'image' existe dans l'objet 'media'
   if (media.image) {
   console.log(media.image);
-    lightboxMedia = document.createElement('img');
-    lightboxMedia.setAttribute('src' , `assets/photographers/${media.photographerId}/${media.image}`);
-    lightboxMedia.setAttribute('alt', media.title );
-    lightboxMedia.setAttribute('width', '500' );
-    lightboxMedia.setAttribute('height', '500' );
-    lightboxMedia.classList.add('lightbox-media');
+    const image = document.createElement('img');
+    image.setAttribute('src' , `assets/photographers/${media.photographerId}/${media.image}`);
+    image.setAttribute('alt', media.title );
+    image.setAttribute('width', '800' );
+    image.setAttribute('height', '500' );
+    image.classList.add('lightbox-media');
+    lightboxMedia.appendChild(image);
+    title.textContent = media.title;
+    lightboxMedia.appendChild(title);
   } else if (media.video) {
-    lightboxMedia = document.createElement('video');
-    lightboxMedia.setAttribute('src' , `assets/photographers/${media.photographerId}/${media.video}`);
-    lightboxMedia.setAttribute('alt', media.title );
-    lightboxMedia.setAttribute('controls', '');
-    lightboxMedia.setAttribute('width', '500' );
-    lightboxMedia.setAttribute('height', '500' );
-    lightboxMedia.classList.add('lightbox-media');
-
+    const video = document.createElement('video');
+    video.setAttribute('src' , `assets/photographers/${media.photographerId}/${media.video}`);
+    video.setAttribute('alt', media.title );
+    video.setAttribute('controls', '');
+    video.setAttribute('width', '800' );
+    video.setAttribute('height', '500' );
+    video.classList.add('lightbox-media');
+    lightboxMedia.appendChild(video);
+    title.textContent = media.title;
+    lightboxMedia.appendChild(title);
   } 
 
+
+
   const closeButton = document.createElement('button');
-  closeButton.textContent = 'Fermer';
+  // closeButton.textContent = 'x';
+  closeButton.classList.add('btn-close');
+  closeButton.innerHTML = '<i class="fas fa-times"></i>';
 
   const prevButton = document.createElement('button');
-  prevButton.textContent = 'Précédent';
+  // prevButton.textContent = '<';
+  prevButton.classList.add('btn-prev');
+  prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
 
   const nextButton = document.createElement('button');
-  nextButton.textContent = 'Suivant';
+  // nextButton.textContent = '>';
+  nextButton.classList.add('btn-next');
+  nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+
+    // Vérifier la visibilité des boutons
+    if (currentMediaIndex === 0) {
+      prevButton.classList.add('hide');
+    } else {
+      prevButton.classList.remove('hide');
+    }
+  
+    if (currentMediaIndex === mediaData.length - 1) {
+      nextButton.classList.add('hide');
+    } else {
+      nextButton.classList.remove('hide');
+    }
 
   // Ajouter les écouteurs d'événements de clic aux boutons
   closeButton.addEventListener('click', closeLightbox);
@@ -61,8 +95,17 @@ function openLightbox(mediasData , e) {
   lightboxContent.innerHTML = '';
 
   // Créer les conteneurs pour les éléments
+  const titleContainer = document.createElement('div');
+  titleContainer.classList.add('title-container');
+  // titleContainer.appendChild(title);
+
   const lightboxMediaContainer = document.createElement('div');
+  lightboxMediaContainer.classList.add('lightbox-container');
   lightboxMediaContainer.appendChild(lightboxMedia);
+  // lightboxMediaContainer.appendChild(title);
+
+
+
 
   const closeButtonContainer = document.createElement('div');
   closeButtonContainer.appendChild(closeButton);
@@ -73,12 +116,14 @@ function openLightbox(mediasData , e) {
   const nextButtonContainer = document.createElement('div');
   nextButtonContainer.appendChild(nextButton);
 
+
+
   // Ajouter les conteneurs à la lightbox
   lightboxContent.appendChild(lightboxMediaContainer);
   lightboxContent.appendChild(closeButtonContainer);
   lightboxContent.appendChild(prevButtonContainer);
   lightboxContent.appendChild(nextButtonContainer);
-
+  // lightboxContent.appendChild(titleContainer);
   // Afficher la lightbox
   lightbox.style.display = 'block';
 
@@ -95,7 +140,7 @@ function closeLightbox() {
 function showPreviousMedia() {
   if (currentMediaIndex > 0) {
     currentMediaIndex--;
-    openLightbox(currentMediaIndex);
+    openLightbox(mediaData, currentMediaIndex)
   }
 }
 
@@ -103,7 +148,7 @@ function showPreviousMedia() {
 function showNextMedia() {
   if (currentMediaIndex < mediaData.length - 1) {
     currentMediaIndex++;
-    openLightbox(currentMediaIndex);
+    openLightbox(mediaData, currentMediaIndex)
   }
 }
 }

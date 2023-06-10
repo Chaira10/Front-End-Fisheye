@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/13f98801db.js" crossorigin="anonymous" defer></script>
     <title>Fisheye - photographe </title>
   </head>
   <body>
@@ -22,14 +23,15 @@
 <!-- Structure de la lightbox -->
 <div id="lightbox" class="lightbox">
   <div class="lightbox-content">
-    <div id="lightbox" style="display: none;">
+    <div id="lightbox">
       <div class="lightbox-content">
+        <div class="button-container"></div>
         <div class="media-container"></div>
-        <div class="button-container">
-          <button id="closeButton">Fermer</button>
-          <button id="prevButton">Précédent</button>
-          <button id="nextButton">Suivant</button>
-        </div>
+        <!-- <div class="button-container">
+          <button id="closeButton">x</button>
+          <button id="prevButton"><</button>
+          <button id="nextButton">></button>
+        </div>-->
       </div>
     </div>
   </div>
