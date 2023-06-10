@@ -64,10 +64,10 @@ function getParamFromUrl(param) {
     photographerContainer.appendChild(photographerCard);
   
     // Récupère l'élément du DOM avec l'ID 'title-modal'
-    const title = document.querySelector('#title-modal');
+    // const title = document.getElementById('title-modal');
   
     // Modifie le contenu textuel de l'élément 'title' avec le nom du photographe
-    title.textContent = `Contactez moi ${photographerName}`;
+    // title.innerHTML = `Contactez moi ${photographerName}`;
   }
   
   // Appelle la fonction displayPhotographerData() pour afficher les données du photographe
@@ -160,7 +160,7 @@ async function displayPhotographerMedia() {
     });
   
     // Mise à jour des détails du photographe (total de likes et prix journalier)
-    displayPhotographerDetails();
+    // displayPhotographerDetails();
   }
   
   // Appelle la fonction displayPhotographerMedia() pour afficher les médias du photographe
@@ -189,7 +189,10 @@ async function displayPhotographerMedia() {
     const totalLikes = await calculateTotalLikes();
   
     // Affiche l'encart en bas de page avec le tarif journalier et le nombre total de likes
-    footerElement.innerHTML = `<p class="p-like">${totalLikes}<i class="fa-sharp fa-solid fa-heart"></i></p><p class="p-price">${photographerPrice}€ /jour</p> `;
+    // footerElement.innerHTML = `<p class="p-like">${totalLikes}<i class="fa-sharp fa-solid fa-heart"></i></p><p class="p-price">${photographerPrice}€ /jour</p> `;
+    // Affiche l'encart en bas de page avec le tarif journalier et le nombre total de likes
+footerElement.innerHTML = `<p class="p-like">${totalLikes}<i class="fa-sharp fa-solid fa-heart"></i></p><p class="p-price">${photographerPrice}€ /jour</p> `;
+
   }
   
 // Calculer le nombre total de likes
@@ -205,3 +208,5 @@ async function calculateTotalLikes() {
 }
 
 displayPhotographerDetails();
+
+

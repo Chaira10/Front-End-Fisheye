@@ -43,29 +43,10 @@ function mediaFactory(data) {
         priceElement.textContent = `$${price}`;
         mediaContainer.appendChild(priceElement);
 
-
-
-
-
-
-
-
-        
-
         return mediaContainer;
     }
 
-    // Calculer le nombre total de likes
-async function calculateTotalLikes() {
-    const mediaData = await fetchMediaData();
-    let totalLikes = 0;
-  
-    mediaData.forEach(media => {
-      totalLikes += media.likes;
-    });
-  
-    return totalLikes;
-  }
+
 
     return {
         id,
