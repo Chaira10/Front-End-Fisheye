@@ -449,7 +449,11 @@
         font-size: 25px;
     }
 
-    /* .filter-container select option:not(:last-child) {
-            border-bottom: 1px solid white;
-        } */
+    .filter-container select option {
+        border-bottom: 3px solid white;
+    }
+
+    .filter-container select option:not(:last-child) {
+        border-bottom: 1px solid white;
+        }
 
