@@ -51,6 +51,8 @@ async function displayPhotographerData() {
     // Récupère le nom du photographe à partir de l'objet photographer
     const photographerName = photographer.name;
 
+    const photographerPrice = photographer.price;
+
     // Utilise la fonction photographerFactory() pour créer un modèle de photographe basé sur l'objet photographer
     const photographerModel = photographerFactory(photographer);
 
@@ -87,6 +89,7 @@ async function getPhotographerMedia(photographerId) {
         // Effectue une requête HTTP GET pour récupérer les données des photographes
         const response = await fetch("../../data/photographers.json");
         const data = await response.json();
+  
 
         // Récupère le tableau des médias à partir des données
         const mediaData = data.media;
@@ -94,20 +97,38 @@ async function getPhotographerMedia(photographerId) {
         // Filtrer les médias pour récupérer uniquement ceux du photographe spécifié par son ID
         const photographerMedia = mediaData.filter(media => media.photographerId == photographerId);
 
+        //  // Calcul du nombre total de likes
+        //  const totalLikes = photographerMedia.reduce((acc, media) => acc + media.likes, 0);
+
         // Retourne les médias du photographe
-        return photographerMedia;
+        return  photographerMedia;
     } catch (error) {
         console.error(error);
     }
 }
 
+// Tri des médias par date (du plus récent au plus ancien)
+function sortMediaByDate(media) {
+    return media.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+  
+  // Tri des médias par nombre de likes (du plus élevé au plus bas)
+  function sortMediaByLikes(media) {
+    return media.sort((a, b) => b.likes - a.likes);
+  }
+  
+  // Tri des médias par titre (par ordre alphabétique)
+  function sortMediaByTitle(media) {
+    return media.sort((a, b) => a.title.localeCompare(b.title));
+  }
 
-// ...
+  
 
 // 7. Utilisez la fonction mediaFactory pour créer des cartes de médias à partir des données récupérées et insérez-les dans le DOM
 async function displayPhotographerMedia() {
     // Récupère les médias du photographe en utilisant la fonction getPhotographerMedia() avec l'ID du photographe (photographeId)
     const photographerMedia = await getPhotographerMedia(photographeId);
+    
 
     // Récupère l'élément du DOM dans lequel les médias doivent être affichés
     const mediaContainer = document.getElementById('media-container');
@@ -123,16 +144,51 @@ async function displayPhotographerMedia() {
         // Ajoute la carte de média à l'élément 'media-container' dans le DOM
         mediaContainer.appendChild(mediaCard);
     });
+
+    // Tri des médias par date (du plus récent au plus ancien)
+  const sortedByDateMedia = sortMediaByDate(photographerMedia);
+
+  // Tri des médias par nombre de likes (du plus élevé au plus bas)
+  const sortedByLikesMedia = sortMediaByLikes(photographerMedia);
+
+  // Tri des médias par titre (par ordre alphabétique)
+  const sortedByTitleMedia = sortMediaByTitle(photographerMedia);
 }
 
 // Appelle la fonction displayPhotographerMedia() pour afficher les médias du photographe
 displayPhotographerMedia();
 
-// ...
+// Calculer le nombre total de likes
+async function calculateTotalLikes() {
+    const mediaData = await getPhotographerMedia(photographeId);
+    let totalLikes = 0;
+
+    mediaData.forEach(media => {
+        totalLikes += media.likes;
+    });
+
+    return totalLikes;
+}
 
 
+// 8. Affiche les détails du photographe, y compris le tarif journalier et le nombre total de likes
+async function displayPhotographerDetails() {
+    // Récupère l'élément du DOM dans lequel les détails du photographe doivent être affichés
+    const footerElement = document.getElementById('footer');
 
+    // Récupère les informations du photographe en utilisant la fonction getPhotographerById() avec l'ID spécifié (photographeId)
+    const photographer = await getPhotographerById(photographeId);
 
+    // Récupère le tarif journalier du photographe
+    const photographerPrice = photographer.price;
+
+    // Récupère le nombre total de likes
+    const totalLikes = await calculateTotalLikes();
+
+    // Affiche l'encart en bas de page avec le tarif journalier et le nombre total de likes
+    footerElement.innerHTML = `<p class="p-like">${totalLikes}<i class="fa-sharp fa-solid fa-heart"></i></p><p class="p-price">${photographerPrice}€ /jour</p> `;
+}
+    displayPhotographerDetails();
 
 
 

@@ -18,6 +18,16 @@
       <div class="photograph-header" id="photographer-container">
         <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
       </div>
+      <div class="filter-container">
+        <label for="sort-filter">Trier par :</label>
+        <select id="sort-filter">
+          <option value="popularity">Popularité</option>
+          <hr>
+          <option value="date">Date</option>
+          <hr>
+          <option value="title">Titre</option>
+        </select>
+      </div>
       <div id="media-container"></div>
       <!-- Structure de la lightbox -->
 <!-- Structure de la lightbox -->
@@ -54,6 +64,7 @@
 				</form>
 			</div>
 		</div>
+    <span id="footer"></span>
     <script src="/scripts/pages/photographer.js"></script>
     <script src="scripts/factories/photographer.js"></script>
     <script src="scripts/factories/media.js"></script>

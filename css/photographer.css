@@ -353,8 +353,6 @@
     padding-left: 43%;
     }
 
-
-
     .lighbox-container {
     position: relative;
     max-width: 100%;
@@ -397,3 +395,61 @@
     .hide {
     display: none;
     }
+
+    .filter-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    }
+
+    .filter-container label {
+    margin-right: 10px;
+    }
+
+    .filter-container select {
+    padding: 5px 10px;
+    border-radius: 5px;
+    /* border-bottom: 1px solid white; */
+    font-size: 14px;
+    background-color: #901c1c;
+    color: white;
+    }
+
+    hr {
+    color: white;
+    }
+
+    #footer {
+        background-color: #db8876;
+        width: 20%;
+        height: 50px;
+        font-size: 25px;
+        position: fixed;
+        bottom: 0;
+        right: 30px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .p-like {
+        width: 50%;
+        margin-top: 10px;
+        margin-left: 10px;
+        font-weight: bold;
+    }
+
+    .p-price {
+        width: 50%;
+        margin-top: 10px;
+        margin-left: 10px;
+        font-weight: bold;
+    }
+
+    .fa-heart {
+        font-size: 25px;
+    }
+
+    /* .filter-container select option:not(:last-child) {
+            border-bottom: 1px solid white;
+        } */
+
