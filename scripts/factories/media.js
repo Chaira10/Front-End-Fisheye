@@ -26,22 +26,26 @@ function mediaFactory(data) {
         }
 
 
+        const spanContainer = document.createElement('div');
+        spanContainer.classList.add('span-title');
 
 
         const titleElement = document.createElement('h3');
         titleElement.classList.add('media-title');
         titleElement.textContent = title;
-        mediaContainer.appendChild(titleElement);
+        spanContainer.appendChild(titleElement);
 
-        const likesElement = document.createElement('span');
+        const likesElement = document.createElement('p');
         likesElement.classList.add('media-likes');
-        likesElement.textContent = `${likes} likes`;
-        mediaContainer.appendChild(likesElement);
+        likesElement.innerHTML = `${likes}<i class="fa-sharp fa-solid fa-heart" id="hearth"></i>`;
+        spanContainer.appendChild(likesElement);
 
-        const priceElement = document.createElement('span');
-        priceElement.classList.add('media-price');
-        priceElement.textContent = `$${price}`;
-        mediaContainer.appendChild(priceElement);
+        mediaContainer.appendChild(spanContainer);
+
+        // const priceElement = document.createElement('span');
+        // priceElement.classList.add('media-price');
+        // priceElement.textContent = `$${price}`;
+        // mediaContainer.appendChild(priceElement);
 
         return mediaContainer;
     }

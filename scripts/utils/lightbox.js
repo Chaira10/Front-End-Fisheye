@@ -192,3 +192,25 @@ async function loadPhotographerMedia(photographerId) {
 }
 // Appeler la fonction pour charger les médias du photographe
 loadPhotographerMedia(parseInt(photographerId));
+
+// Fonction pour gérer les événements clavier
+function handleKeyDown(event) {
+  const key = event.keyCode;
+
+  switch (key) {
+    case 37: // Flèche gauche
+      showPreviousMedia();
+      break;
+    case 39: // Flèche droite
+      showNextMedia();
+      break;
+    case 27: // Touche échappement
+      closeLightbox();
+      break;
+    default:
+      break;
+  }
+}
+
+// Ajouter un écouteur d'événement pour gérer les touches clavier
+document.addEventListener('keydown', handleKeyDown);

@@ -64,10 +64,10 @@ function getParamFromUrl(param) {
     photographerContainer.appendChild(photographerCard);
   
     // Récupère l'élément du DOM avec l'ID 'title-modal'
-    // const title = document.getElementById('title-modal');
+    const title = document.getElementById('title-modal');
   
     // Modifie le contenu textuel de l'élément 'title' avec le nom du photographe
-    // title.innerHTML = `Contactez moi ${photographerName}`;
+    title.innerHTML = `Contactez moi <br> ${photographerName}`;
   }
   
   // Appelle la fonction displayPhotographerData() pour afficher les données du photographe

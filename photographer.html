@@ -19,11 +19,11 @@
         <button class="contact_button" id="btn-contact" onclick="displayModal()">Contactez-moi</button>
       </div>
       <div class="filter-container">
-        <label for="sort-filter">Trier par :</label>
+        <label for="sort-filter">Trier par </label>
         <select id="sort-filter">
-          <option value="popularity">Popularité</option>
+          <option value="popularity" class="option-1">Popularité</option>
           
-          <option value="date">Date</option>
+          <option value="date" class="option-2">Date</option>
           
           <option value="title">Titre</option>
         </select>
@@ -51,10 +51,10 @@
     </main>
     <div id="contact_modal">
 			<div class="modal">
-				<header>
+				<span class="modal-title">
           <h2 id="title-modal"></h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
-        </header>
+          <img src="assets/icons/close.svg" class="close" onclick="closeModal()" />
+        </span>
 				<form id="contact-form" method="post">
           
             <div>
@@ -62,9 +62,9 @@
               <input type="text" id="prenom" name="prenom"/>
               <label for="nom">Nom</label>
               <input type="text" id="nom" name="nom"/>
-              <label for="email">email</label>
+              <label for="email">Email</label>
               <input type="email" id="email" name="email"/>
-              <label for="msg">Message</label>
+              <label for="msg">Votre message</label>
               <textarea type="text" id="msg" name="msg"></textarea>
             </div>
             <button class="submit" type="submit" id="btn-submit">Envoyer</button>
