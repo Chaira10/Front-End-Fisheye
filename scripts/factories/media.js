@@ -5,6 +5,8 @@ function mediaFactory(data) {
         const mediaContainer = document.createElement('div');
         mediaContainer.setAttribute('data-id', id);
         mediaContainer.classList.add('media-card');
+        // mediaContainer.setAttribute('tabindex', '0');
+
 
         if (image) {
             const imageElement = document.createElement('img');
@@ -38,6 +40,7 @@ function mediaFactory(data) {
         const likesElement = document.createElement('p');
         likesElement.classList.add('media-likes');
         likesElement.innerHTML = `${likes}<i class="fa-sharp fa-solid fa-heart" id="hearth"></i>`;
+        likesElement.setAttribute('aria-label', 'Likes');
         spanContainer.appendChild(likesElement);
 
         mediaContainer.appendChild(spanContainer);

@@ -68,6 +68,10 @@ function getParamFromUrl(param) {
   
     // Modifie le contenu textuel de l'élément 'title' avec le nom du photographe
     title.innerHTML = `Contactez moi <br> ${photographerName}`;
+
+    const btnContact = document.getElementById('btn-contact');
+    btnContact.setAttribute('aria-label', `Contact me ${photographerName}`);
+
   }
   
   // Appelle la fonction displayPhotographerData() pour afficher les données du photographe
@@ -155,9 +159,14 @@ async function displayPhotographerMedia() {
       // Obtient la carte de média (élément <article>) du modèle de média en appelant la fonction getMediaCardDOM()
       const mediaCard = mediaModel.getMediaCardDOM();
   
-      // Ajoute la carte de média à l'élément 'media-container' dans le DOM
-      mediaContainer.appendChild(mediaCard);
+
+
+
+        // Ajoute la carte de média à l'élément 'media-container' dans le DOM
+        mediaContainer.appendChild(mediaCard);
     });
+
+    
   
     // Mise à jour des détails du photographe (total de likes et prix journalier)
     // displayPhotographerDetails();
@@ -166,7 +175,34 @@ async function displayPhotographerMedia() {
   // Appelle la fonction displayPhotographerMedia() pour afficher les médias du photographe
   displayPhotographerMedia();
   
-  // ...
+  // 
+  function enableKeyboardNavigation() {
+    // Sélectionnez tous les éléments de média dans le DOM
+    const mediaElements = document.querySelectorAll('.media');
+  
+    // Convertissez la liste des éléments de média en un tableau pour pouvoir l'indexer
+    const mediaArray = Array.from(mediaElements);
+  
+    // Suivez l'index actuel du média sélectionné
+    let currentIndex = 0;
+  
+    // Ajoutez un écouteur d'événements pour les touches du clavier
+    document.addEventListener('keydown', (event) => {
+      if (event.keyCode === 37) {
+        // Touche de gauche (précédent)
+        currentIndex = (currentIndex - 1 + mediaArray.length) % mediaArray.length;
+        mediaArray[currentIndex].focus();
+      } else if (event.keyCode === 39) {
+        // Touche de droite (suivant)
+        currentIndex = (currentIndex + 1) % mediaArray.length;
+        mediaArray[currentIndex].focus();
+      }
+    });
+  }
+  
+  // Appelez la fonction pour activer la navigation au clavier entre les médias
+  enableKeyboardNavigation();
+  
   
   // 8. Ecouteur d'événement pour le changement de filtre
   const sortFilterElement = document.getElementById("sort-filter");

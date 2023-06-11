@@ -10,6 +10,8 @@ function openLightbox(mediasData , e) {
     console.log(index);
   // Récupérer l'élément de la lightbox
   const lightbox = document.getElementById('lightbox');
+  lightbox.setAttribute('aria-label', 'image closup view');
+  lightbox.setAttribute('role', 'dialog');
 
   // Récupérer l'élément pour afficher le média
   const lightboxContent = document.querySelector('.lightbox-content');
@@ -62,16 +64,21 @@ function openLightbox(mediasData , e) {
   // closeButton.textContent = 'x';
   closeButton.classList.add('btn-close');
   closeButton.innerHTML = '<i class="fas fa-times"></i>';
+  closeButton.setAttribute('aria-label', 'Close dialog');
 
-  const prevButton = document.createElement('button');
+  const prevButton = document.createElement('a');
   // prevButton.textContent = '<';
   prevButton.classList.add('btn-prev');
   prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+  prevButton.setAttribute('aria-label', 'Previous image');
+  prevButton.href = '#';
 
-  const nextButton = document.createElement('button');
+  const nextButton = document.createElement('a');
   // nextButton.textContent = '>';
   nextButton.classList.add('btn-next');
   nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+  nextButton.setAttribute('aria-label', 'Next image');
+  nextButton.href = '#';
 
     // Vérifier la visibilité des boutons
     if (currentMediaIndex === 0) {
