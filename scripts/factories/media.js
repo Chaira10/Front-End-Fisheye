@@ -5,7 +5,6 @@ function mediaFactory(data) {
         const mediaContainer = document.createElement('div');
         mediaContainer.setAttribute('data-id', id);
         mediaContainer.classList.add('media-card');
-        // mediaContainer.setAttribute('tabindex', '0');
 
 
         if (image) {
@@ -53,7 +52,21 @@ function mediaFactory(data) {
         return mediaContainer;
     }
 
+// Ajoutez la navigation au clavier à chaque élément de média
+function enableKeyboardNavigation() {
+    const mediaContainer = getMediaCardDOM();
+    mediaContainer.addEventListener('keydown', (event) => {
+      const keyCode = event.key;
+      const previousElement = mediaContainer.previousElementSibling;
+      const nextElement = mediaContainer.nextElementSibling;
 
+      if (keyCode === 'ArrowLeft' && previousElement) {
+        previousElement.focus();
+      } else if (keyCode === 'ArrowRight' && nextElement) {
+        nextElement.focus();
+      }
+    });
+  }
 
     return {
         id,

@@ -48,7 +48,24 @@ header {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    /* transition: box-shadow 0.3s ease; */
 }
+
+.photographer-card-focus {
+    /* Styles pour le focus visuel */
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.5);
+    outline: 2px solid blue;
+  }
+
+  .focused {
+    outline: 2px solid blue;
+
+  }
+
+  .active-card {
+    outline: 2px solid blue;
+
+  }
 
 .photographer_section article h2 {
     color: #D3573C;

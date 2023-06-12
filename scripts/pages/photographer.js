@@ -118,6 +118,35 @@ function getParamFromUrl(param) {
   function sortMediaByTitle(media) {
     return media.sort((a, b) => a.title.localeCompare(b.title));
   }
+
+
+  // Fonction pour mettre le focus sur le média précédent
+function focusPreviousMedia(currentMediaCard) {
+  // Récupérer le média précédent par rapport au média actuel
+  const previousMediaCard = currentMediaCard.previousElementSibling;
+
+  if (previousMediaCard) {
+    previousMediaCard.focus();
+  } else {
+    // Si le média actuel est le premier média, mettre le focus sur le dernier média
+    const lastMediaCard = currentMediaCard.parentNode.lastElementChild;
+    lastMediaCard.focus();
+  }
+}
+
+// Fonction pour mettre le focus sur le média suivant
+function focusNextMedia(currentMediaCard) {
+  // Récupérer le média suivant par rapport au média actuel
+  const nextMediaCard = currentMediaCard.nextElementSibling;
+
+  if (nextMediaCard) {
+    nextMediaCard.focus();
+  } else {
+    // Si le média actuel est le dernier média, mettre le focus sur le premier média
+    const firstMediaCard = currentMediaCard.parentNode.firstElementChild;
+    firstMediaCard.focus();
+  }
+}
   
   // 7. Utilisez la fonction mediaFactory pour créer des cartes de médias à partir des données récupérées et insérez-les dans le DOM
 async function displayPhotographerMedia() {
@@ -159,8 +188,9 @@ async function displayPhotographerMedia() {
       // Obtient la carte de média (élément <article>) du modèle de média en appelant la fonction getMediaCardDOM()
       const mediaCard = mediaModel.getMediaCardDOM();
   
-
-
+  // Ajoute l'attribut tabindex="0" pour permettre au média de recevoir le focus
+  mediaCard.setAttribute('tabindex', '0');
+  mediaCard.addEventListener('keydown', handleMediaCardKeyDown);
 
         // Ajoute la carte de média à l'élément 'media-container' dans le DOM
         mediaContainer.appendChild(mediaCard);
@@ -171,38 +201,27 @@ async function displayPhotographerMedia() {
     // Mise à jour des détails du photographe (total de likes et prix journalier)
     // displayPhotographerDetails();
   }
-  
+
   // Appelle la fonction displayPhotographerMedia() pour afficher les médias du photographe
   displayPhotographerMedia();
+
+  function handleMediaCardKeyDown(event) {
+    const { keyCode } = event;
   
-  // 
-  function enableKeyboardNavigation() {
-    // Sélectionnez tous les éléments de média dans le DOM
-    const mediaElements = document.querySelectorAll('.media');
-  
-    // Convertissez la liste des éléments de média en un tableau pour pouvoir l'indexer
-    const mediaArray = Array.from(mediaElements);
-  
-    // Suivez l'index actuel du média sélectionné
-    let currentIndex = 0;
-  
-    // Ajoutez un écouteur d'événements pour les touches du clavier
-    document.addEventListener('keydown', (event) => {
-      if (event.keyCode === 37) {
-        // Touche de gauche (précédent)
-        currentIndex = (currentIndex - 1 + mediaArray.length) % mediaArray.length;
-        mediaArray[currentIndex].focus();
-      } else if (event.keyCode === 39) {
-        // Touche de droite (suivant)
-        currentIndex = (currentIndex + 1) % mediaArray.length;
-        mediaArray[currentIndex].focus();
-      }
-    });
+    switch (keyCode) {
+      case 13: // Enter key
+        openMedia(event.currentTarget);
+        break;
+      case 37: // Left arrow key
+        focusPreviousMedia(event.currentTarget);
+        break;
+      case 39: // Right arrow key
+        focusNextMedia(event.currentTarget);
+        break;
+      default:
+        break;
+    }
   }
-  
-  // Appelez la fonction pour activer la navigation au clavier entre les médias
-  enableKeyboardNavigation();
-  
   
   // 8. Ecouteur d'événement pour le changement de filtre
   const sortFilterElement = document.getElementById("sort-filter");

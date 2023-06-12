@@ -93,6 +93,29 @@ function openLightbox(mediasData , e) {
       nextButton.classList.remove('hide');
     }
 
+    // Fonction pour afficher le média précédent
+    function showPreviousMedia() {
+      if (currentMediaIndex > 0) {
+        currentMediaIndex--;
+        openLightbox(mediaData, currentMediaIndex)
+      }
+    }
+    
+    // Fonction pour afficher le média suivant
+    function showNextMedia() {
+      if (currentMediaIndex < mediaData.length - 1) {
+        currentMediaIndex++;
+        openLightbox(mediaData, currentMediaIndex)
+      }
+    }
+
+
+    
+
+
+
+
+
   // Ajouter les écouteurs d'événements de clic aux boutons
   closeButton.addEventListener('click', closeLightbox);
   prevButton.addEventListener('click', showPreviousMedia);
@@ -143,21 +166,7 @@ function closeLightbox() {
   lightbox.style.display = 'none';
 }
 
-// Fonction pour afficher le média précédent
-function showPreviousMedia() {
-  if (currentMediaIndex > 0) {
-    currentMediaIndex--;
-    openLightbox(mediaData, currentMediaIndex)
-  }
-}
 
-// Fonction pour afficher le média suivant
-function showNextMedia() {
-  if (currentMediaIndex < mediaData.length - 1) {
-    currentMediaIndex++;
-    openLightbox(mediaData, currentMediaIndex)
-  }
-}
 }
 
 
@@ -200,24 +209,6 @@ async function loadPhotographerMedia(photographerId) {
 // Appeler la fonction pour charger les médias du photographe
 loadPhotographerMedia(parseInt(photographerId));
 
-// Fonction pour gérer les événements clavier
-function handleKeyDown(event) {
-  const key = event.keyCode;
 
-  switch (key) {
-    case 37: // Flèche gauche
-      showPreviousMedia();
-      break;
-    case 39: // Flèche droite
-      showNextMedia();
-      break;
-    case 27: // Touche échappement
-      closeLightbox();
-      break;
-    default:
-      break;
-  }
-}
 
-// Ajouter un écouteur d'événement pour gérer les touches clavier
-document.addEventListener('keydown', handleKeyDown);
+

@@ -14,23 +14,69 @@ async function getPhotographers() {
     }
 }
 
+const photographerCards = []; // Un tableau pour stocker les cartes de photographe
 
 async function displayData(photographers) {
     // Cette ligne utilise la méthode querySelector pour sélectionner l'élément HTML ayant la classe "photographer_section"
     const photographersSection = document.querySelector(".photographer_section");
 
     // Cette ligne utilise la méthode forEach pour itérer sur chaque élément du tableau des photographes
-    photographers.forEach((photographer) => {
+    photographers.forEach((photographer, index) => {
         // Cette ligne utilise une fonction appelée photographerFactory pour créer un modèle de photographe à partir des données du photographe actuel
-        const photographerModel = photographerFactory(photographer);
+        const photographerModel = photographerFactory(photographer, index);
 
         // Cette ligne utilise la méthode getUserCardDOM() du modèle de photographe pour obtenir l'élément DOM de la carte utilisateur
         const userCardDOM = photographerModel.getUserCardDOM();
+        userCardDOM.classList.add(`card-${index}`); // Ajoute la classe "card-${index}" à l'élément article pour distinguer chaque carte de photographe
+        
+        photographerCards.push(userCardDOM); // Ajoute la carte de photographe au tableau
 
         // Cette ligne ajoute l'élément DOM de la carte utilisateur à la section des photographes
         photographersSection.appendChild(userCardDOM);
+        
+
+
     });
 }
+ // Gestion des touches de direction gauche et droite pour la navigation entre les cartes de photographe
+ const handleKeyPress = (event) => {
+    const activeCard = document.querySelector('.active-card');
+    
+    if (activeCard) {
+      let nextCard = null;
+    
+      switch (event.key) {
+        case 'ArrowLeft': {
+          nextCard = activeCard.previousElementSibling;
+          if (!nextCard) {
+            // Si aucun élément précédent, naviguer vers le dernier élément
+            const cards = document.querySelectorAll('.photographer-card');
+            nextCard = cards[cards.length - 1];
+          }
+          break;
+        }
+        case 'ArrowRight': {
+          nextCard = activeCard.nextElementSibling;
+          if (!nextCard) {
+            // Si aucun élément suivant, naviguer vers le premier élément
+            nextCard = document.querySelector('.photographer-card');
+          }
+          break;
+        }
+        default:
+          return; // Ignore les autres touches
+      }
+    
+      if (nextCard) {
+        nextCard.focus();
+        activeCard.classList.remove('active-card');
+        nextCard.classList.add('active-card');
+      }
+    }
+  };
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
 
 
 async function init() {
