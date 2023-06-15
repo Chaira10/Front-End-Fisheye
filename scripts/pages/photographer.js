@@ -181,20 +181,29 @@ async function displayPhotographerMedia() {
     }
   
     // Parcours chaque média du photographe
-    sortedMedia.forEach((mediaData) => {
-      // Utilise la fonction mediaFactory pour créer un modèle de média basé sur les données du média
-      const mediaModel = mediaFactory(mediaData);
-  
-      // Obtient la carte de média (élément <article>) du modèle de média en appelant la fonction getMediaCardDOM()
-      const mediaCard = mediaModel.getMediaCardDOM();
-  
+for (const mediaData of sortedMedia) {
+  // Utilise la fonction mediaFactory pour créer un modèle de média basé sur les données du média
+  const photographer = await getPhotographerById(photographeId);
+  const nameOfPhotographe = photographer.id;
+  const mediaCard = MediaFactory(mediaData, nameOfPhotographe);
+
+  // Obtient la carte de média (élément <article>) du modèle de média
+  // const mediaCard = mediaModel.getMediaCardDOM();
+
+  // Ajoute l'écouteur d'événement sur le média pour ouvrir la lightbox
+  mediaCard.addEventListener('click', () => {
+    loadImage(mediaData.image ? 'image' : 'video', `assets/photographers/${photographeId}/${mediaData.image || mediaData.video}`, mediaData.title);
+  });
+
   // Ajoute l'attribut tabindex="0" pour permettre au média de recevoir le focus
   mediaCard.setAttribute('tabindex', '0');
   mediaCard.addEventListener('keydown', handleMediaCardKeyDown);
 
-        // Ajoute la carte de média à l'élément 'media-container' dans le DOM
-        mediaContainer.appendChild(mediaCard);
-    });
+  // Ajoute la carte de média à l'élément 'media-container' dans le DOM
+  mediaContainer.appendChild(mediaCard);
+}
+
+    
 
     
   

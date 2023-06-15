@@ -1,214 +1,120 @@
-// Variables globales pour stocker les informations sur les médias et la lightbox
-let mediaData = []; // Tableau contenant les données des médias
-let currentMediaIndex = 0; // Index du média actuellement affiché dans la lightbox
+// DOM Lightbox
+const lightboxImage = document.querySelector('.lightbox_img');
+const lightboxVideo = document.querySelector('.lightbox_video');
+const lightboxDescription = document.querySelector('.lightbox_description');
+const lightboxNext = document.querySelector('.lightbox_next');
+const lightboxPrev = document.querySelector('.lightbox_prev');
+const lightboxClose = document.querySelector('.lightbox_close');
+const lightbox = document.querySelector('.lightbox');
 
-// Fonction pour ouvrir la lightbox avec le média spécifié
-function openLightbox(mediasData , e) {
-    // console.log(e.target.parentElement.dataset.id);
+// Je garde une trace du dernier média affiché
+let LastTypeMedia = '';
+let LastLinkMedia = '';
+// eslint-disable-next-line no-unused-vars
+let LastTitleMedia = '';
+let IsLightboxOpen = false;
 
-    let index = e?.target ? mediasData.findIndex(m => m.id === parseInt(e.target.parentElement.dataset.id)) : e
-    console.log(index);
-  // Récupérer l'élément de la lightbox
-  const lightbox = document.getElementById('lightbox');
-  lightbox.setAttribute('aria-label', 'image closup view');
-  lightbox.setAttribute('role', 'dialog');
+// Ajoute un écouteur d'événement pour passer au média suivant
+lightboxNext.addEventListener('click', () => {
+  NextMedia();
+});
 
-  // Récupérer l'élément pour afficher le média
-  const lightboxContent = document.querySelector('.lightbox-content');
+// Ajoute un écouteur d'événement pour passer au média précédent
+lightboxPrev.addEventListener('click', () => {
+  PreviousMedia();
+});
 
-  
+// Ajoute un écouteur d'événement pour fermer la lightbox
+lightboxClose.addEventListener('click', () => {
+  CloseLightbox();
+});
 
-
-  // Mettre à jour l'index du média actuellement affiché
-  currentMediaIndex = index;
-
-  // Récupérer les informations sur le média
-  const media = mediaData[currentMediaIndex];
-// const media = mediaFactory(mediaData[currentMediaIndex]);
-
-  console.log(media);
-  let lightboxMedia = document.createElement('div');
-  lightboxMedia.classList.add('lightbox-medias');
-
-  let title = document.createElement('h2');
-  title.classList.add('lightbox-title');
-
-//   Vérifier si la propriété 'image' existe dans l'objet 'media'
-  if (media.image) {
-  console.log(media.image);
-    const image = document.createElement('img');
-    image.setAttribute('src' , `assets/photographers/${media.photographerId}/${media.image}`);
-    image.setAttribute('alt', media.title );
-    image.setAttribute('width', '800' );
-    image.setAttribute('height', '500' );
-    image.classList.add('lightbox-media');
-    lightboxMedia.appendChild(image);
-    title.textContent = media.title;
-    lightboxMedia.appendChild(title);
-  } else if (media.video) {
-    const video = document.createElement('video');
-    video.setAttribute('src' , `assets/photographers/${media.photographerId}/${media.video}`);
-    video.setAttribute('alt', media.title );
-    video.setAttribute('controls', '');
-    video.setAttribute('width', '800' );
-    video.setAttribute('height', '500' );
-    video.classList.add('lightbox-media');
-    lightboxMedia.appendChild(video);
-    title.textContent = media.title;
-    lightboxMedia.appendChild(title);
-  } 
-
-
-
-  const closeButton = document.createElement('button');
-  // closeButton.textContent = 'x';
-  closeButton.classList.add('btn-close');
-  closeButton.innerHTML = '<i class="fas fa-times"></i>';
-  closeButton.setAttribute('aria-label', 'Close dialog');
-
-  const prevButton = document.createElement('a');
-  // prevButton.textContent = '<';
-  prevButton.classList.add('btn-prev');
-  prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
-  prevButton.setAttribute('aria-label', 'Previous image');
-  prevButton.href = '#';
-
-  const nextButton = document.createElement('a');
-  // nextButton.textContent = '>';
-  nextButton.classList.add('btn-next');
-  nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
-  nextButton.setAttribute('aria-label', 'Next image');
-  nextButton.href = '#';
-
-    // Vérifier la visibilité des boutons
-    if (currentMediaIndex === 0) {
-      prevButton.classList.add('hide');
-    } else {
-      prevButton.classList.remove('hide');
-    }
-  
-    if (currentMediaIndex === mediaData.length - 1) {
-      nextButton.classList.add('hide');
-    } else {
-      nextButton.classList.remove('hide');
-    }
-
-    // Fonction pour afficher le média précédent
-    function showPreviousMedia() {
-      if (currentMediaIndex > 0) {
-        currentMediaIndex--;
-        openLightbox(mediaData, currentMediaIndex)
-      }
-    }
-    
-    // Fonction pour afficher le média suivant
-    function showNextMedia() {
-      if (currentMediaIndex < mediaData.length - 1) {
-        currentMediaIndex++;
-        openLightbox(mediaData, currentMediaIndex)
-      }
-    }
-
-
-    
-
-
-
-
-
-  // Ajouter les écouteurs d'événements de clic aux boutons
-  closeButton.addEventListener('click', closeLightbox);
-  prevButton.addEventListener('click', showPreviousMedia);
-  nextButton.addEventListener('click', showNextMedia);
-
-  // Vider le contenu existant de la lightbox
-  lightboxContent.innerHTML = '';
-
-  // Créer les conteneurs pour les éléments
-  const titleContainer = document.createElement('div');
-  titleContainer.classList.add('title-container');
-  // titleContainer.appendChild(title);
-
-  const lightboxMediaContainer = document.createElement('div');
-  lightboxMediaContainer.classList.add('lightbox-container');
-  lightboxMediaContainer.appendChild(lightboxMedia);
-  // lightboxMediaContainer.appendChild(title);
-
-
-
-
-  const closeButtonContainer = document.createElement('div');
-  closeButtonContainer.appendChild(closeButton);
-
-  const prevButtonContainer = document.createElement('div');
-  prevButtonContainer.appendChild(prevButton);
-
-  const nextButtonContainer = document.createElement('div');
-  nextButtonContainer.appendChild(nextButton);
-
-
-
-  // Ajouter les conteneurs à la lightbox
-  lightboxContent.appendChild(lightboxMediaContainer);
-  lightboxContent.appendChild(closeButtonContainer);
-  lightboxContent.appendChild(prevButtonContainer);
-  lightboxContent.appendChild(nextButtonContainer);
-  // lightboxContent.appendChild(titleContainer);
-  // Afficher la lightbox
-  lightbox.style.display = 'block';
-
-  // Fonction pour fermer la lightbox
-function closeLightbox() {
-  // Récupérer l'élément de la lightbox
-  const lightbox = document.getElementById('lightbox');
-
-  // Cacher la lightbox
-  lightbox.style.display = 'none';
-}
-
-
-}
-
-
-
-// Obtenir l'ID du photographe à partir de l'URL
-const urlParams = new URLSearchParams(window.location.search);
-const photographerId = urlParams.get('id');
-
-
-
-// Fonction pour charger les données des médias du photographe
-async function loadPhotographerMedia(photographerId) {
-  try {
-    // Effectuer une requête HTTP GET pour récupérer les données des médias du photographe
-    const response = await fetch('../../data/photographers.json');
-    const data = await response.json();
-    console.log(data);
-    // Récupérer le tableau des médias à partir des données
-    const mediasData = data.media;
-    console.log(mediasData);
-    // Filtrer les médias pour récupérer uniquement ceux du photographe spécifié par son ID
-    // mediaData = mediasData.filter(media => media.photographerId.toString() === photographerId.toString());
-    mediaData = mediasData.filter(media => media.photographerId === parseInt(photographerId));
-    // console.log(mediaData[index].photographerId);
-
-    // mediaData = mediasData.filter(media => media.hasOwnProperty('photographerId') && media.photographerId.toString() === photographerId.toString());
-
-
-    // Ajouter des écouteurs d'événements de clic sur les médias pour ouvrir la lightbox
-    const mediaElements = document.querySelectorAll('.media');
-    console.log(mediaElements, mediaData, mediasData);
-    mediaElements.forEach((mediaElement,) => {
-        // console.log(photographerId);
-      mediaElement.addEventListener('click', (e) => openLightbox(mediaData, e));
-    });
-  } catch (error) {
-    console.error(error);
+// Ajoute un écouteur d'événement pour fermer la lightbox en appuyant sur la touche Entrée
+lightboxClose.addEventListener('keydown', (e) => {
+  if (e.key == 'Enter') {
+    CloseLightbox();
   }
+  if (e.key == 'Tab') {
+    lightbox.focus();
+  }
+});
+
+// Ajoute un écouteur d'événement pour les touches clavier dans la lightbox
+lightbox.addEventListener('keydown', (e) => {
+  if (e.key == 'Escape' && IsLightboxOpen) {
+    CloseLightbox();
+  }
+  if (e.key == 'ArrowRight' && IsLightboxOpen) {
+    NextMedia();
+  }
+  if (e.key == 'ArrowLeft' && IsLightboxOpen) {
+    PreviousMedia();
+  }
+});
+
+// Fonction pour charger le média dans la lightbox
+function loadImage(TypeMedia, LinkMedia, TitleMedia) {
+  switch (TypeMedia) {
+    case 'image':
+    case 'IMG':
+      lightboxVideo.style.display = 'none';
+      lightboxImage.style.display = 'block';
+      lightboxImage.src = LinkMedia;
+      lightboxImage.setAttribute('alt', `image de ${TitleMedia}`);
+      break;
+    case 'video':
+    case 'VIDEO':
+      lightboxImage.style.display = 'none';
+      lightboxVideo.style.display = 'block';
+      lightboxVideo.src = LinkMedia;
+      break;
+    default:
+      console.log('veuillez vérifier le type du Media');
+  }
+  lightboxDescription.textContent = TitleMedia;
+
+  LastTypeMedia = TypeMedia;
+  LastLinkMedia = LinkMedia;
+  LastTitleMedia = TitleMedia;
+  IsLightboxOpen = true;
 }
-// Appeler la fonction pour charger les médias du photographe
-loadPhotographerMedia(parseInt(photographerId));
 
+// Fonction pour passer au média suivant
+function NextMedia() {
+  // Je récupère un tableau contenant tous les liens des médias
+  const AllMediaImg = Array.from(document.querySelectorAll('.media'));
+  const ArrayLink = AllMediaImg.map(link => link.getAttribute('src'));
 
+  // Définit l'index de l'image en cours
+  let pos = ArrayLink.findIndex(i => i == LastLinkMedia);
+  if (pos == ArrayLink.length - 1) {
+    pos = -1;
+  }
 
+  // Je récupère un tableau contenant tous les titres
+  const data = document.querySelectorAll('.title');
 
+  console.log(AllMediaImg[pos + 1].tagName); // Renvoie IMG ou VIDEO
+
+  loadImage(AllMediaImg[pos + 1].tagName, ArrayLink[pos + 1], data[pos + 1].textContent);
+}
+
+// Fonction pour passer au média précédent
+function PreviousMedia() {
+  const AllMediaImg = Array.from(document.querySelectorAll('.media'));
+  const ArrayLink = AllMediaImg.map(link => link.getAttribute('src'));
+  let pos = ArrayLink.findIndex(i => i == LastLinkMedia);
+  if (pos == 0) {
+    pos = ArrayLink.length;
+  }
+  const data = document.querySelectorAll('.title');
+
+  loadImage(AllMediaImg[pos - 1].tagName, ArrayLink[pos - 1], data[pos - 1].textContent);
+}
+
+// Fonction pour fermer la lightbox
+function CloseLightbox() {
+  lightbox.style.display = 'none';
+  IsLightboxOpen = false;
+  document.querySelector('.media').focus();
+}
