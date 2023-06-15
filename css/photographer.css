@@ -522,8 +522,13 @@ textarea {
     }
 
     .lightbox-media {
-        max-width: 80vw;
+        max-width: 70vw;
+        width: 85%;
     }
+
+    /* .lightbox-content {
+        width: 100%;
+    } */
 
     .btn-close  {
         font-size: 25px;
@@ -541,9 +546,38 @@ textarea {
         font-size: 25px;
         right: 0;
     }
+    .fas {
+        font-size: 45px;
+    }
+    
+    .btn-close {
+        position: absolute;
+        top: -15px;
+        right: 0;
+        padding: 10px;
+        border: none;
+        color: #901c1c;
+        background-color: transparent;
+        font-size: 45px;
+    }
+    
+
+    
+    .btn-prev {
+      left: 0px;
+    
+    }
+    
+    .btn-next {
+      right: 0px;
+    }
     
     .modal {
         width: 80vw;
+    }
+
+    .lightbox-title {
+        padding-left: 17%;
     }
 
     #footer {
@@ -706,7 +740,19 @@ textarea {
         }
   }
 
+  @media screen and (max-width: 1024px) {
+    .lightbox-title {
+        padding-left: 13%;
+    }
 
+
+
+  }
+
+  @media screen and (min-width: 1440px) {
+    .lightbox-title {
+        padding-left: 38%;
+    }}
 @import url("photographer.css");
 
 
