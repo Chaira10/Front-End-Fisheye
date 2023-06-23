@@ -12,12 +12,33 @@
   <body>
     <header>
       <a href="./index.html" class="logo-link" >
-        <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page"/>
+        <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page" tabindex="0"/>
         </a>
     </header>
     <main id="main">
       <div class="photograph-header" id="photographer-container">
-        <button class="contact_button" id="btn-contact" onclick="displayModal()" >Contactez-moi</button>
+        <button class="contact_button" id="btn-contact" onclick="displayModal()" tabindex="7">Contactez-moi</button>
+      </div>
+      <div id="contact_modal">
+        <div class="modal">
+          <span class="modal-title">
+            <h2 id="title-modal"></h2>
+            <img src="assets/icons/close.svg" class="close" onclick="closeModal()" aria-label="Close Contact Form"/>
+          </span>
+          <form id="contact-form" method="post" role="dialog">
+            <div>
+              <label for="prenom">Prénom</label>
+              <input type="text" id="prenom" name="prenom" tabindex="8" aria-label="First name"/>
+              <label for="nom">Nom</label>
+              <input type="text" id="nom" name="nom" tabindex="9" aria-label="Last name"/>
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" tabindex="10" aria-label="Email"/>
+              <label for="msg">Votre message</label>
+              <textarea type="text" id="msg" name="msg" tabindex="11" aria-label="Your message"></textarea>
+            </div>
+            <button class="submit" type="submit" id="btn-submit" tabindex="12" aria-label="Send">Envoyer</button>
+          </form>
+        </div>
       </div>
       <div class="filter-container">
         <label for="sort-filter">Trier par </label>
@@ -55,35 +76,15 @@
  </div>
 
     </main>
-    <div id="contact_modal">
-			<div class="modal">
-				<span class="modal-title">
-          <h2 id="title-modal"></h2>
-          <img src="assets/icons/close.svg" class="close" onclick="closeModal()"  aria-label="Close Contact Form"/>
-        </span>
-				<form id="contact-form" method="post" role="dialog">
-          
-            <div>
-              <label for="prenom">Prénom</label>
-              <input type="text" id="prenom" name="prenom" aria-label="First name"/>
-              <label for="nom">Nom</label>
-              <input type="text" id="nom" name="nom" aria-label="Last name"/>
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" aria-label="Email"/>
-              <label for="msg">Votre message</label>
-              <textarea type="text" id="msg" name="msg" aria-label="Your message"></textarea>
-            </div>
-            <button class="submit" type="submit" id="btn-submit" aria-label="Send">Envoyer</button>
-          </form>
-			</div>
-		</div>
-    <span id="footer"></span>
 
+    <span id="footer"></span>
     <script src="/scripts/pages/photographer.js"></script>
+
     <script src="scripts/factories/photographer.js"></script>
     <script src="scripts/factories/media.js"></script>
-
     <script src="/scripts/utils/lightbox.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
+
+
   </body>
 </html>

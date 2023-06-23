@@ -31,29 +31,29 @@ lightboxClose.addEventListener('click', () => {
 
 // Ajoute un écouteur d'événement pour fermer la lightbox en appuyant sur la touche Entrée
 lightboxClose.addEventListener('keydown', (e) => {
-  if (e.key == 'Enter') {
+  if (e.key === 'Enter') {
     CloseLightbox();
   }
-  if (e.key == 'Tab') {
+  if (e.key === 'Tab') {
     lightbox.focus();
   }
 });
 
 // Ajoute un écouteur d'événement pour les touches clavier dans la lightbox
 lightbox.addEventListener('keydown', (e) => {
-  if (e.key == 'Escape' && IsLightboxOpen) {
+  if (e.key === 'Escape' && IsLightboxOpen) {
     CloseLightbox();
   }
-  if (e.key == 'ArrowRight' && IsLightboxOpen) {
+  if (e.key === 'ArrowRight' && IsLightboxOpen) {
     NextMedia();
   }
-  if (e.key == 'ArrowLeft' && IsLightboxOpen) {
+  if (e.key === 'ArrowLeft' && IsLightboxOpen) {
     PreviousMedia();
   }
 });
 
 // Fonction pour charger le média dans la lightbox
-function loadImage(TypeMedia, LinkMedia, TitleMedia) {
+function loadImage (TypeMedia, LinkMedia, TitleMedia) {
   switch (TypeMedia) {
     case 'image':
     case 'IMG':
@@ -80,14 +80,14 @@ function loadImage(TypeMedia, LinkMedia, TitleMedia) {
 }
 
 // Fonction pour passer au média suivant
-function NextMedia() {
+function NextMedia () {
   // Je récupère un tableau contenant tous les liens des médias
   const AllMediaImg = Array.from(document.querySelectorAll('.media'));
   const ArrayLink = AllMediaImg.map(link => link.getAttribute('src'));
 
   // Définit l'index de l'image en cours
-  let pos = ArrayLink.findIndex(i => i == LastLinkMedia);
-  if (pos == ArrayLink.length - 1) {
+  let pos = ArrayLink.findIndex(i => i === LastLinkMedia);
+  if (pos === ArrayLink.length - 1) {
     pos = -1;
   }
 
@@ -100,11 +100,11 @@ function NextMedia() {
 }
 
 // Fonction pour passer au média précédent
-function PreviousMedia() {
+function PreviousMedia () {
   const AllMediaImg = Array.from(document.querySelectorAll('.media'));
   const ArrayLink = AllMediaImg.map(link => link.getAttribute('src'));
-  let pos = ArrayLink.findIndex(i => i == LastLinkMedia);
-  if (pos == 0) {
+  let pos = ArrayLink.findIndex(i => i === LastLinkMedia);
+  if (pos === 0) {
     pos = ArrayLink.length;
   }
   const data = document.querySelectorAll('.title');
@@ -113,7 +113,7 @@ function PreviousMedia() {
 }
 
 // Fonction pour fermer la lightbox
-function CloseLightbox() {
+function CloseLightbox () {
   lightbox.style.display = 'none';
   IsLightboxOpen = false;
   document.querySelector('.media').focus();

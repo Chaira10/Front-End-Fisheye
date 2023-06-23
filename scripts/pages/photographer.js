@@ -45,34 +45,77 @@ function getParamFromUrl(param) {
   async function displayPhotographerData() {
     // Récupère le photographe en utilisant la fonction getPhotographerById() avec l'ID spécifié (photographeId)
     const photographer = await getPhotographerById(photographeId);
-  
     // Récupère le nom du photographe à partir de l'objet photographer
     const photographerName = photographer.name;
-  
-    const photographerPrice = photographer.price;
-  
     // Utilise la fonction photographerFactory() pour créer un modèle de photographe basé sur l'objet photographer
     const photographerModel = photographerFactory(photographer);
-  
     // Récupère l'élément du DOM avec l'ID 'photographer-container'
     const photographerContainer = document.getElementById('photographer-container');
-  
     // Obtient la carte utilisateur (élément <article>) du modèle de photographe en appelant la fonction getUserCardDOM()
     const photographerCard = photographerModel.getUserCardDOM();
-  
     // Ajoute la carte utilisateur à l'élément 'photographer-container' dans le DOM
     photographerContainer.appendChild(photographerCard);
-  
     // Récupère l'élément du DOM avec l'ID 'title-modal'
     const title = document.getElementById('title-modal');
-  
     // Modifie le contenu textuel de l'élément 'title' avec le nom du photographe
     title.innerHTML = `Contactez moi <br> ${photographerName}`;
-
+    // Récupère le bouton de contact à partir de son ID
     const btnContact = document.getElementById('btn-contact');
+    // Définit l'attribut aria-label du bouton avec une valeur contenant le nom du photographe
     btnContact.setAttribute('aria-label', `Contact me ${photographerName}`);
+    // Modifie l'ID du bouton pour le renommer en 'btn-modal'
+    // btnContact.id = 'btn-modal';
+    // Sélectionne l'élément du DOM avec la classe CSS 'card-price'
+    const price = document.querySelector('.card-price');
+    // Vide le contenu HTML de l'élément 'price'
+    price.innerHTML = '';
+    // Remplace l'élément 'price' par le bouton 'btnContact'
+    price.replaceWith(btnContact);
+    // // Définit l'attribut ID du bouton 'btnContact' en 'btn-modal'
+    // btnContact.setAttribute('id', 'btn-modal');
+    // // Récupère à nouveau le bouton à partir de son ID
+    // const btn = document.getElementById('btn-modal');
+    // // Supprime la classe CSS 'contact_button' du bouton
+    // btn.classList.remove('contact_button');
+    // // Ajoute la classe CSS 'btn-modal-photographe' au bouton
+    // btn.classList.add('btn-modal-photographe');
+    // // Ajoute un écouteur d'événement pour détecter le focus sur le bouton
+    // btn.addEventListener('focus', () => {
+    //   btn.classList.add('focused');
+    });
+
+// Ajoute un écouteur d'événement pour détecter le blur (perte de focus) sur le bouton
+btn.addEventListener('blur', () => {
+  btn.classList.remove('focused');
+});
+
+// Ajoute un écouteur d'événement pour détecter la pression de la touche 'Enter' sur le bouton
+btn.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    event.preventDefault(); // Empêche le comportement par défaut du bouton
+    displayModal();
+  }
+});
+
+
+
+    // Gère la navigation au clavier et l'ouverture du formulaire
+    function handleButtonKeyPress(event) {
+    if (event.key === "Enter") {
+      // Touche "Entrée" pressée
+      displayModal();
+      event.preventDefault();
+    }
+  }
+
+    // Écoute l'événement de touche clavier sur le bouton
+    btn.addEventListener("keydown", handleButtonKeyPress);
+
 
   }
+
+
+
   
   // Appelle la fonction displayPhotographerData() pour afficher les données du photographe
   displayPhotographerData();
@@ -179,6 +222,29 @@ async function displayPhotographerMedia() {
         sortedMedia = photographerMedia;
         break;
     }
+
+    const selectElement = document.getElementById('sort-filter');
+
+selectElement.addEventListener('keydown', handleKeyboardNavigationFilter);
+
+function handleKeyboardNavigationFilter(event) {
+  const options = selectElement.options;
+  const selectedIndex = selectElement.selectedIndex;
+
+  if (event.key === 'ArrowUp' && selectedIndex > 0) {
+    selectElement.selectedIndex = selectedIndex - 1;
+    event.preventDefault();
+  } else if (event.key === 'ArrowDown' && selectedIndex < options.length - 1) {
+    selectElement.selectedIndex = selectedIndex + 1;
+    event.preventDefault();
+  } else if (event.key === 'Enter') {
+    // Valider la sélection
+    const selectedValue = options[selectedIndex].value;
+    console.log('Option sélectionnée:', selectedValue);
+    event.preventDefault();
+  }
+}
+
   
     // Parcours chaque média du photographe
 for (const mediaData of sortedMedia) {
@@ -196,19 +262,12 @@ for (const mediaData of sortedMedia) {
   });
 
   // Ajoute l'attribut tabindex="0" pour permettre au média de recevoir le focus
-  mediaCard.setAttribute('tabindex', '0');
+  mediaCard.setAttribute('tabindex', '20');
   mediaCard.addEventListener('keydown', handleMediaCardKeyDown);
 
   // Ajoute la carte de média à l'élément 'media-container' dans le DOM
   mediaContainer.appendChild(mediaCard);
 }
-
-    
-
-    
-  
-    // Mise à jour des détails du photographe (total de likes et prix journalier)
-    // displayPhotographerDetails();
   }
 
   // Appelle la fonction displayPhotographerMedia() pour afficher les médias du photographe
@@ -255,8 +314,7 @@ for (const mediaData of sortedMedia) {
     // Affiche l'encart en bas de page avec le tarif journalier et le nombre total de likes
     // footerElement.innerHTML = `<p class="p-like">${totalLikes}<i class="fa-sharp fa-solid fa-heart"></i></p><p class="p-price">${photographerPrice}€ /jour</p> `;
     // Affiche l'encart en bas de page avec le tarif journalier et le nombre total de likes
-footerElement.innerHTML = `<p class="p-like">${totalLikes}<i class="fa-sharp fa-solid fa-heart"></i></p><p class="p-price">${photographerPrice}€ /jour</p> `;
-
+    footerElement.innerHTML = `<p class="p-like">${totalLikes}<i class="fa-sharp fa-solid fa-heart"></i></p><p class="p-price">${photographerPrice}€ /jour</p> `;
   }
   
 // Calculer le nombre total de likes

@@ -1,4 +1,4 @@
-function MediaFactory(media, photographeId) {
+function MediaFactory (media, photographeId) {
   // Récupère un tableau des clés des données du média
   const props = Object.keys(media);
   // Crée un élément <article> pour le média
@@ -11,11 +11,11 @@ function MediaFactory(media, photographeId) {
   const lightbox = document.querySelector('.lightbox');
 
   // Vérifie le type du média
-  if (TypeMedia == 'image') {
+  if (TypeMedia === 'image') {
     // Crée un élément <img> pour l'image
     const img = document.createElement('img');
     img.setAttribute('class', 'media');
-    img.setAttribute('tabindex', '7');
+    img.setAttribute('tabindex', '15');
     img.setAttribute('width', '500');
     img.setAttribute('height', '500');
     // Définit le lien de l'image en fonction du photographe et du média
@@ -32,23 +32,23 @@ function MediaFactory(media, photographeId) {
       loadImage(TypeMedia, LinkImage, media.title);
     });
     img.addEventListener('keydown', (e) => {
-      if (e.key == 'Enter') {
+      if (e.key === 'Enter') {
         lightbox.style.display = 'block';
         lightbox.focus();
         loadImage(TypeMedia, LinkImage, media.title);
       }
     });
-  } else if (TypeMedia == 'video') {
+  } else if (TypeMedia === 'video') {
     // Crée un élément <video> pour la vidéo
     const video = document.createElement('video');
     video.setAttribute('class', 'media');
-    video.setAttribute('tabindex', '7');
+    video.setAttribute('tabindex', '15');
     video.setAttribute('width', '500');
     video.setAttribute('height', '500');
     // Définit le lien de la vidéo en fonction du photographe et du média
     const LinkVideo = `assets/photographers/${photographeId}/${media.video}`;
     video.setAttribute('src', LinkVideo);
-    video.setAttribute('aria-label',' ouvre la vue lightBox');
+    video.setAttribute('aria-label', ' ouvre la vue lightBox');
     article.appendChild(video);
 
     // Ajoute un écouteur d'événement pour ouvrir la lightbox lors du clic ou de la touche Entrée
@@ -57,14 +57,14 @@ function MediaFactory(media, photographeId) {
       loadImage(TypeMedia, LinkVideo, media.title);
     });
     video.addEventListener('keydown', (e) => {
-      if (e.key == 'Enter') {
+      if (e.key === 'Enter') {
         lightbox.style.display = 'block';
         loadImage(TypeMedia, LinkVideo, media.title);
       }
     });
   }
-const spanContainer = document.createElement('span');
-spanContainer.classList.add('span-container');
+  const spanContainer = document.createElement('span');
+  spanContainer.classList.add('span-container');
 
   // Crée un élément <div> pour le titre du média
   const div = document.createElement('div');
@@ -78,7 +78,7 @@ spanContainer.classList.add('span-container');
   div.appendChild(pTitle);
   // Crée un élément <div> pour les likes du média
   const divLikes = document.createElement('div');
-  divLikes.setAttribute('class','media-likes');
+  divLikes.setAttribute('class', 'media-likes');
 
   // Crée un élément <p> pour afficher le nombre de likes
   const pLikes = document.createElement('p');
@@ -100,7 +100,7 @@ spanContainer.classList.add('span-container');
     AllLikes.innerHTML++;
   });
   iconHeart.addEventListener('keydown', (e) => {
-    if (e.key != 'Enter') {
+    if (e.key !== 'Enter') {
       return;
     }
     pLikes.innerHTML++;
@@ -118,13 +118,6 @@ spanContainer.classList.add('span-container');
   });
   spanContainer.appendChild(div);
   spanContainer.appendChild(divLikes);
-
-
-  // Ajoute les éléments au DOM
-  // divLikes.appendChild(pLikes);
-  // divLikes.appendChild(iconHeart);
-  // div.appendChild(pTitle);
-  // div.appendChild(divLikes);
   article.appendChild(spanContainer);
 
   return article;

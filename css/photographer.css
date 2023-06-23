@@ -55,7 +55,7 @@ header {
 
 }
 
-.contact_button {
+.btn-modal-photographe {
     font-size: 20px;
     font-weight: 500;
     color: white;
@@ -96,11 +96,18 @@ header {
 }
 
 .price-card {
-    color: transparent;
+    /* display: none; */
 }
 
+#btn-contact {
+    display: none;
+}
 
-.contact_button {
+#btn-modal {
+    display: block;
+}
+
+.btn-modal-photographe {
     display: flex;
     align-items: center;
     justify-content: center;
