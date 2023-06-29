@@ -22,6 +22,19 @@ function submitForm (event) {
   const nom = document.getElementById('nom').value;
   const email = document.getElementById('email').value;
   const message = document.getElementById('msg').value;
+  const modalbg = document.querySelector('.modal');
+  // Vérifie que les champs ne sont pas vides
+  if (prenom.trim() === '' || nom.trim() === '' || email.trim() === '' || message.trim() === '') {
+    const errorMessage = document.createElement('p');
+    // Affiche un message de validation
+    errorMessage.setAttribute('role', 'alert');
+    errorMessage.setAttribute('aria-live', 'assertive');
+    errorMessage.focus();
+    errorMessage.textContent = 'Veuillez remplir tous les champs du formulaire.';
+    errorMessage.classList.add('error-message');
+    modalbg.appendChild(errorMessage);
+    return; // Arrête l'exécution de la fonction si les champs sont vides
+  }
 
   // Affiche les données dans la console
   console.log('Prénom:', prenom);
@@ -34,13 +47,27 @@ function submitForm (event) {
 
   // Ferme la modal après la soumission
   closeModal();
+
+  // Affiche un message de validation
+  const validationMessage = document.createElement('p');
+  validationMessage.setAttribute('role', 'alert');
+  validationMessage.setAttribute('aria-live', 'assertive');
+  validationMessage.focus();
+  validationMessage.textContent = 'Le formulaire a été soumis avec succès!';
+  validationMessage.classList.add('validation-message');
+  document.body.appendChild(validationMessage);
+
+  // Supprime le message de validation après quelques secondes
+  setTimeout(() => {
+    validationMessage.remove();
+  }, 3000);
 }
 
 const btnSubmit = document.getElementById('btn-submit');
 btnSubmit.addEventListener('click', submitForm);
 
 const modal = document.getElementById('contact_modal');
-const formElements = modal.querySelectorAll('input, textarea, button');
+const formElements = modal.querySelectorAll('input, textarea, button, img');
 
 let currentFocus = 0; // Indice de l'élément actuellement en focus
 
@@ -81,6 +108,8 @@ function handleKeyboardNavigations (event) {
     if (currentElement.tagName === 'BUTTON') {
       // Si l'élément actuel est un bouton, soumettre le formulaire
       submitForm(event);
+    } else if (currentElement.tagName === 'IMG') {
+      closeModal(event);
     }
     event.preventDefault();
   }

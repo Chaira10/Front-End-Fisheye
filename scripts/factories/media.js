@@ -15,7 +15,6 @@ function MediaFactory (media, photographeId) {
     // Crée un élément <img> pour l'image
     const img = document.createElement('img');
     img.setAttribute('class', 'media');
-    img.setAttribute('tabindex', '15');
     img.setAttribute('width', '500');
     img.setAttribute('height', '500');
     // Définit le lien de l'image en fonction du photographe et du média
@@ -42,7 +41,6 @@ function MediaFactory (media, photographeId) {
     // Crée un élément <video> pour la vidéo
     const video = document.createElement('video');
     video.setAttribute('class', 'media');
-    video.setAttribute('tabindex', '15');
     video.setAttribute('width', '500');
     video.setAttribute('height', '500');
     // Définit le lien de la vidéo en fonction du photographe et du média
@@ -73,7 +71,6 @@ function MediaFactory (media, photographeId) {
   // Crée un élément <p> pour le titre
   const pTitle = document.createElement('p');
   pTitle.setAttribute('class', 'title');
-  pTitle.setAttribute('tabindex', '7');
   pTitle.textContent = media.title;
   div.appendChild(pTitle);
   // Crée un élément <div> pour les likes du média
@@ -90,7 +87,6 @@ function MediaFactory (media, photographeId) {
   const iconHeart = document.createElement('i');
   iconHeart.setAttribute('class', 'fa-solid fa-heart');
   iconHeart.setAttribute('aria-label', 'likes');
-  iconHeart.setAttribute('tabindex', '7');
   divLikes.appendChild(iconHeart);
 
   // Ajoute des écouteurs d'événement pour incrémenter les likes au clic ou à la touche Entrée

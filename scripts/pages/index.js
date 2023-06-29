@@ -29,46 +29,17 @@ async function displayData (photographers) {
     photographerCards.push(userCardDOM); // Ajoute la carte de photographe au tableau
     // Cette ligne ajoute l'élément DOM de la carte utilisateur à la section des photographes
     photographersSection.appendChild(userCardDOM);
+
+    const navbarLink = document.querySelectorAll('header nav .logo');
+    navbarLink.forEach((link, index) => {
+      link.setAttribute('tabindex', index + 1);
+    });
+    const articleElement = document.querySelectorAll('.card-name, .card-city, .tagline-card, .price-card, #img-card');
+    articleElement.forEach((element, index) => {
+      element.setAttribute('tabindex', index + navbarLink.length + 1);
+    });
   });
 }
-// Gestion des touches de direction gauche et droite pour la navigation entre les cartes de photographe
-const handleKeyPress = (event) => {
-  const activeCard = document.querySelector('.active-card');
-
-  if (activeCard) {
-    let nextCard = null;
-
-    switch (event.key) {
-      case 'ArrowLeft': {
-        nextCard = activeCard.previousElementSibling;
-        if (!nextCard) {
-          // Si aucun élément précédent, naviguer vers le dernier élément
-          const cards = document.querySelectorAll('.photographer-card');
-          nextCard = cards[cards.length - 1];
-        }
-        break;
-      }
-      case 'ArrowRight': {
-        nextCard = activeCard.nextElementSibling;
-        if (!nextCard) {
-          // Si aucun élément suivant, naviguer vers le premier élément
-          nextCard = document.querySelector('.photographer-card');
-        }
-        break;
-      }
-      default:
-        return; // Ignore les autres touches
-    }
-
-    if (nextCard) {
-      nextCard.focus();
-      activeCard.classList.remove('active-card');
-      nextCard.classList.add('active-card');
-    }
-  }
-};
-
-document.addEventListener('keydown', handleKeyPress);
 
 async function init () {
   // Récupère les données des photographes en appelant la fonction asynchrone getPhotographers()

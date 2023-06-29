@@ -1,6 +1,7 @@
 body {
     font-family: "DM Sans", sans-serif;
     margin: 0 5vw;
+    position: relative;
 }
 
 
@@ -55,7 +56,11 @@ header {
 
 }
 
-.btn-modal-photographe {
+.contact_button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     font-size: 20px;
     font-weight: 500;
     color: white;
@@ -67,19 +72,17 @@ header {
     border-radius: 5px;
     cursor: pointer;
     letter-spacing: 1px;
-
 }
 
 .photograph-header {
     position: relative;
     display: flex;
     width: 100%;
-
 }
 
 .card-photographer {
     display: flex;
-    flex-direction: row-reverse;
+    /* flex-direction: row-reverse; */
     width: 100%;
     justify-content: space-between;
     padding: 20px;
@@ -90,32 +93,10 @@ header {
     width: 60%;
 }
 
-.container-img {
+/* .container-img {
     display: flex;
     justify-content: flex-end;
-}
-
-.price-card {
-    /* display: none; */
-}
-
-#btn-contact {
-    display: none;
-}
-
-#btn-modal {
-    display: block;
-}
-
-.btn-modal-photographe {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    left: 41%;
-    top: 30%;
-    padding: 5px;
-}
+}  */
 
 #img-card {
     display: flex;
@@ -207,7 +188,17 @@ hr {
 .filter-container select option:not(:last-child) {
     border-bottom: 1px solid white;
 }
-
+#sort-filter.dropdown-open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    /* Ajoutez d'autres styles selon vos besoins pour simuler l'ouverture du menu déroulant */
+  }
+  
+  #sort-filter.dropdown-open + select {
+    display: block;
+    /* Ajoutez d'autres styles selon vos besoins pour simuler l'ouverture du menu déroulant */
+  }
+  
 
 /* ====================================================== */
 /* =====================   card media   ================= */
@@ -288,12 +279,6 @@ hr {
     font-size: 21px;
 
 
-}
-
-i {
-    /* margin-top: 1px;
-    margin-left: 7px;
-    font-size: 19px; */
 }
 
 .media-price {
@@ -520,6 +505,31 @@ textarea {
         cursor: pointer;
     }
 
+
+    .validation-message {
+        background-color: #dff0d8;
+        color: #25af27;
+        padding: 10px;
+        border: 1px solid #d6e9c6;
+        border-radius: 4px;
+        margin-top: 10px;
+        position: absolute;
+        top:0;
+        right: 20px;
+      }
+
+      .error-message {
+        background-color: #901c1c;
+        color: white;
+        padding: 10px;
+        border: 1px solid #901c1c;
+        border-radius: 4px;
+        margin-top: 10px;
+        position: absolute;
+        top:0;
+        right: 20px;
+      }
+      
 
     /* Media query pour tablette */
 @media screen and (max-width: 768px) {
