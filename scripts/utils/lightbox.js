@@ -77,14 +77,16 @@ function loadImage (TypeMedia, LinkMedia, TitleMedia) {
   LastLinkMedia = LinkMedia;
   LastTitleMedia = TitleMedia;
   IsLightboxOpen = true;
+  console.log(LastLinkMedia);
 }
 
 // Fonction pour passer au média suivant
 function NextMedia () {
   // Je récupère un tableau contenant tous les liens des médias
   const AllMediaImg = Array.from(document.querySelectorAll('.media'));
+  console.log(AllMediaImg);
   const ArrayLink = AllMediaImg.map(link => link.getAttribute('src'));
-
+  console.log(ArrayLink);
   // Définit l'index de l'image en cours
   let pos = ArrayLink.findIndex(i => i === LastLinkMedia);
   if (pos === ArrayLink.length - 1) {
@@ -104,8 +106,10 @@ function PreviousMedia () {
   const AllMediaImg = Array.from(document.querySelectorAll('.media'));
   const ArrayLink = AllMediaImg.map(link => link.getAttribute('src'));
   let pos = ArrayLink.findIndex(i => i === LastLinkMedia);
+  console.log(LastLinkMedia);
   if (pos === 0) {
     pos = ArrayLink.length;
+    console.log(pos);
   }
   const data = document.querySelectorAll('.title');
 

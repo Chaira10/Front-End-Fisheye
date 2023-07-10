@@ -2,14 +2,17 @@
 /* ==============  header page photographe ============== */
 /* ====================================================== */
 
-function getParamFromUrl (param) {
+function getParamFromUrl (id) {
   // Récupère la chaîne de requête de l'URL actuelle
   const queryString = window.location.search;
+  console.log(window.location);
+  console.log(queryString);
   // Crée un nouvel objet URLSearchParams à partir de la chaîne de requête
   const urlParams = new URLSearchParams(queryString);
+  console.log(urlParams.get(id));
   // Utilise la méthode get() de l'objet urlParams pour obtenir la valeur du paramètre spécifié
   // La valeur du paramètre est renvoyée en tant que résultat de la fonction
-  return urlParams.get(param);
+  return parseInt(urlParams.get(id));
 }
 
 /* ====================================================== */
@@ -38,9 +41,15 @@ async function getPhotographerById (id) {
   // Récupère les données des photographes en utilisant la fonction getPhotographers()
   const { photographers } = await getPhotographers();
 
+  let foundPhotographer = null;
+  photographers.forEach((photographer) => {
+    if (photographer.id === id) {
+      foundPhotographer = photographer;
+    }
+  });
   // Utilise la méthode find() sur le tableau des photographes pour trouver le photographe correspondant à l'ID spécifié
   // La fonction de recherche retourne le premier photographe dont l'ID correspond à l'ID spécifié
-  return photographers.find((photographer) => photographer.id == id);
+  return foundPhotographer;
 }
 
 /* ====================================================== */
@@ -48,6 +57,7 @@ async function getPhotographerById (id) {
 async function displayPhotographerData () {
   // Récupère le photographe en utilisant la fonction getPhotographerById() avec l'ID spécifié (photographeId)
   const photographer = await getPhotographerById(photographeId);
+  console.log(photographer);
   // Récupère le nom du photographe à partir de l'objet photographer
   const photographerName = photographer.name;
   // Utilise la fonction photographerFactory() pour créer un modèle de photographe basé sur l'objet photographer
@@ -61,11 +71,23 @@ async function displayPhotographerData () {
   const article = document.querySelector('.photographer-card');
   const image = article.querySelector('.img-container');
   const text = article.querySelector('.card-text');
-  // Déplacez l'image à la fin de l'article
-  article.appendChild(image);
+  // selectionne le container à supprimer
+  const imgNameDiv = article.querySelector('.img-name');
+  // selectionne le name du photographe
+  const name = article.querySelector('.card-name');
+  text.insertBefore(name, text.firstChild);
+  // Insérer le contenu de l'élément .img-container avant le conteneur .img-name
+  imgNameDiv.parentNode.insertBefore(image, imgNameDiv);
   // Déplacez le texte avant l'image
   article.insertBefore(text, image);
-
+  // Récupérer tous les éléments enfants du conteneur .img-name
+  const children = Array.from(imgNameDiv.children);
+  // Supprimer le conteneur .img-name et ses autres enfants
+  children.forEach(function (child) {
+    imgNameDiv.removeChild(child);
+  });
+  // Supprimer le conteneur .img-name lui-même
+  imgNameDiv.parentNode.removeChild(imgNameDiv);
   /* ====================================================== */
   // Ajout du nom du photographe dans la modal
   // Récupère l'élément du DOM avec l'ID 'title-modal'
@@ -131,7 +153,7 @@ async function getPhotographerMedia (photographerId) {
 
     // Filtrer les médias pour récupérer uniquement ceux du photographe spécifié par son ID
     const photographerMedia = mediaData.filter(
-      (media) => media.photographerId == photographerId
+      (media) => media.photographerId === photographerId
     );
 
     return photographerMedia;
@@ -162,19 +184,14 @@ function sortMediaByTitle (media) {
 async function displayPhotographerMedia () {
   // Récupère les médias du photographe en utilisant la fonction getPhotographerMedia() avec l'ID du photographe (photographeId)
   const photographerMedia = await getPhotographerMedia(photographeId);
-
   // Récupère l'élément du DOM dans lequel les médias doivent être affichés
   const mediaContainer = document.getElementById('media-container');
-
   // Efface le contenu précédent du conteneur des médias
   mediaContainer.innerHTML = '';
-
   // Tri des médias en fonction de la valeur sélectionnée dans le menu déroulant
   const sortFilterElement = document.getElementById('sort-filter');
   const selectedSortOption = sortFilterElement.value;
-
   let sortedMedia;
-
   switch (selectedSortOption) {
     case 'popularity':
       sortedMedia = sortMediaByLikes(photographerMedia);
@@ -189,14 +206,12 @@ async function displayPhotographerMedia () {
       sortedMedia = photographerMedia;
       break;
   }
-
   const selectElement = document.getElementById('sort-filter');
   selectElement.addEventListener('keydown', function (event) {
     if (event.key === 'Enter' || event.key === ' ') {
       selectElement.click();
     }
   });
-
   selectElement.addEventListener('keydown', function (event) {
     if (event.key === 'Tab') {
       selectElement.classList.add('dropdown-open');
@@ -204,40 +219,38 @@ async function displayPhotographerMedia () {
       selectElement.click();
     }
   });
-
   // Parcours chaque média du photographe
-  for (const mediaData of sortedMedia) {
-  // Utilise la fonction mediaFactory pour créer un modèle de média basé sur les données du média
-    const photographer = await getPhotographerById(photographeId);
-    const nameOfPhotographe = photographer.id;
-    const mediaCard = MediaFactory(mediaData, nameOfPhotographe);
-
-    // Ajoute l'écouteur d'événement sur le média pour ouvrir la lightbox
+  sortedMedia.forEach((mediaData) => {
+    const mediaCard = MediaFactory(mediaData, photographeId);
     mediaCard.addEventListener('click', () => {
       loadImage(mediaData.image ? 'image' : 'video', `assets/photographers/${photographeId}/${mediaData.image || mediaData.video}`, mediaData.title);
     });
-
-    // Ajoute la carte de média à l'élément 'media-container' dans le DOM
     mediaContainer.appendChild(mediaCard);
-  }
+  });
 
   /* ====================================================== */
   /* ==========  ajout tabindex dynamiquement main ======== */
   /* ====================================================== */
+  const navbarLinks = document.querySelectorAll('header nav a');
+  const articleElements = document.querySelectorAll('.card-name, .card-city, .tagline-card, .contact_button, #img-card');
+  const modalTitle = document.querySelector('.modal-title');
+  const headerForm = modalTitle.querySelectorAll(' #title-modal, .close');
   const filterElements = document.querySelectorAll('#sort-filter');
   const mediaElements = document.querySelectorAll('.photograph-article img,.photograph-article video,.photograph-article .media-title p ,.photograph-article .fa-heart');
-  const footer = document.querySelectorAll('.p-like, .p-price');
+  const lightboxElements = document.querySelectorAll('.lightbox, .lightbox_img_container,.lightbox_img, .lightbox_video, .lightbox_description, .lightbox_prev, .lightbox_next, .lightbox_close   ');
+  // ajouter tabindex lightbox,
+  let footerLength = 2;
 
   filterElements.forEach((element, index) => {
-    element.setAttribute('tabindex', index + 12 + 1);
+    element.setAttribute('tabindex', index + headerForm.length + navbarLinks.length + articleElements.length + 1);
   });
 
   mediaElements.forEach((element, index) => {
-    element.setAttribute('tabindex', index + 12 + filterElements.length + 1);
+    element.setAttribute('tabindex', index + headerForm.length + navbarLinks.length + articleElements.length + filterElements.length + 1);
   });
 
-  footer.forEach((element, index) => {
-    element.setAttribute('tabindex', index + 12 + filterElements.length + mediaElements.length + 1);
+  lightboxElements.forEach((element, index) => {
+    element.setAttribute('tabindex', index + headerForm.length + navbarLinks.length + articleElements.length + filterElements.length + mediaElements.length + footerLength + 1);
   });
 }
 
@@ -269,6 +282,23 @@ async function displayPhotographerDetails () {
 
   // Affiche l'encart en bas de page avec le tarif journalier et le nombre total de likes
   footerElement.innerHTML = `<p class="p-like">${totalLikes}<i class="fa-sharp fa-solid fa-heart"></i></p><p class="p-price">${photographerPrice}€ /jour</p> `;
+
+  const footer = document.querySelector('.footers');
+  const footerElements = document.querySelectorAll('.p-like, .p-price');
+  const navbarLinks = document.querySelectorAll('header nav a');
+  const articleElements = document.querySelectorAll('.card-name, .card-city, .tagline-card, .contact_button, #img-card');
+  const modalTitle = document.querySelector('.modal-title');
+  const headerForm = modalTitle.querySelectorAll(' #title-modal, .close');
+  const filterElements = document.querySelectorAll('#sort-filter');
+  const mediaElements = document.querySelectorAll('.photograph-article img,.photograph-article video,.photograph-article .media-title p ,.photograph-article .fa-heart');
+  const lightboxElements = document.querySelectorAll('.lightbox, .lightbox_img_container,.lightbox_img, .lightbox_video, .lightbox_description, .lightbox_prev, .lightbox_next, .lightbox_close   ');
+  console.log(footerElement.length);
+
+  footerElements.forEach((element, index) => {
+    element.setAttribute('tabindex', index + headerForm.length + navbarLinks.length + articleElements.length + filterElements.length + mediaElements.length + 1);
+    console.log(element);
+  });
+  console.log(footerElements.length);
 }
 /* ====================================================== */
 // Calculer le nombre total de likes

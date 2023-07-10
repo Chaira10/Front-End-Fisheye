@@ -80,38 +80,44 @@ function MediaFactory (media, photographeId) {
   // Crée un élément <p> pour afficher le nombre de likes
   const pLikes = document.createElement('p');
   pLikes.setAttribute('class', 'likes');
-  pLikes.setAttribute('id', 'AllLikes');
+  pLikes.classList.add('AllLikes');
+  // pLikes.setAttribute('id', 'AllLikes');
   pLikes.textContent = media.likes;
   divLikes.appendChild(pLikes);
   // Crée un élément <i> pour l'icône de like
   const iconHeart = document.createElement('i');
-  iconHeart.setAttribute('class', 'fa-solid fa-heart');
+  iconHeart.setAttribute('class', 'fa-solid fa-heart icon-heart-default');
   iconHeart.setAttribute('aria-label', 'likes');
   divLikes.appendChild(iconHeart);
 
-  // Ajoute des écouteurs d'événement pour incrémenter les likes au clic ou à la touche Entrée
+  const iconHeartHover = document.createElement('i');
+  iconHeartHover.setAttribute('class', 'fa-solid fa-heart-circle-plus icon-heart-hover');
+  iconHeartHover.setAttribute('aria-label', 'likes');
+  divLikes.appendChild(iconHeartHover);
+  // Appliquer les styles par défaut
+  iconHeartHover.style.display = 'none';
+
   iconHeart.addEventListener('click', () => {
     pLikes.innerHTML++;
-    const AllLikes = document.getElementById('AllLikes');
-    AllLikes.innerHTML++;
-  });
-  iconHeart.addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter') {
-      return;
-    }
-    pLikes.innerHTML++;
-    const AllLikes = document.getElementById('AllLikes');
-    AllLikes.innerHTML++;
   });
 
-  // Ajoute des écouteurs d'événement pour modifier l'apparence de l'icône de like au survol
-  iconHeart.addEventListener('mouseenter', () => {
-    iconHeart.style.cursor = 'pointer';
-    iconHeart.setAttribute('class', 'fa-solid fa-heart-circle-plus');
+  iconHeart.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      pLikes.innerHTML++;
+    }
   });
-  iconHeart.addEventListener('mouseleave', () => {
-    iconHeart.setAttribute('class', 'fa-solid fa-heart');
+
+  // Ajouter l'écouteur d'événement pour changer l'icône au survol
+  divLikes.addEventListener('mouseenter', () => {
+    iconHeart.style.display = 'none';
+    iconHeartHover.style.display = 'inline-block';
   });
+
+  divLikes.addEventListener('mouseleave', () => {
+    iconHeart.style.display = 'inline-block';
+    iconHeartHover.style.display = 'none';
+  });
+
   spanContainer.appendChild(div);
   spanContainer.appendChild(divLikes);
   article.appendChild(spanContainer);

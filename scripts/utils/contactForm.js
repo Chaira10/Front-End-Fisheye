@@ -16,7 +16,6 @@ function closeModal () {
 
 function submitForm (event) {
   event.preventDefault(); // Empêche le rechargement de la page après la soumission du formulaire
-
   // Récupère les valeurs des champs du formulaire
   const prenom = document.getElementById('prenom').value;
   const nom = document.getElementById('nom').value;
@@ -33,21 +32,21 @@ function submitForm (event) {
     errorMessage.textContent = 'Veuillez remplir tous les champs du formulaire.';
     errorMessage.classList.add('error-message');
     modalbg.appendChild(errorMessage);
+    // Supprime le message d' erreur après quelques secondes
+    setTimeout(() => {
+      errorMessage.remove();
+    }, 3000);
     return; // Arrête l'exécution de la fonction si les champs sont vides
   }
-
   // Affiche les données dans la console
   console.log('Prénom:', prenom);
   console.log('Nom:', nom);
   console.log('Email:', email);
   console.log('Message:', message);
-
   // Réinitialise le formulaire
   document.getElementById('contact-form').reset();
-
   // Ferme la modal après la soumission
   closeModal();
-
   // Affiche un message de validation
   const validationMessage = document.createElement('p');
   validationMessage.setAttribute('role', 'alert');
@@ -56,7 +55,6 @@ function submitForm (event) {
   validationMessage.textContent = 'Le formulaire a été soumis avec succès!';
   validationMessage.classList.add('validation-message');
   document.body.appendChild(validationMessage);
-
   // Supprime le message de validation après quelques secondes
   setTimeout(() => {
     validationMessage.remove();
