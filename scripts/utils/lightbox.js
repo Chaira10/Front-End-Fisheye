@@ -8,6 +8,7 @@ const lightboxClose = document.querySelector('.lightbox_close');
 const lightbox = document.querySelector('.lightbox');
 
 // Je garde une trace du dernier média affiché
+// eslint-disable-next-line no-unused-vars
 let LastTypeMedia = '';
 let LastLinkMedia = '';
 // eslint-disable-next-line no-unused-vars

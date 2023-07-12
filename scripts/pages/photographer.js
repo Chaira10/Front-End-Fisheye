@@ -47,8 +47,6 @@ async function getPhotographerById (id) {
       foundPhotographer = photographer;
     }
   });
-  // Utilise la méthode find() sur le tableau des photographes pour trouver le photographe correspondant à l'ID spécifié
-  // La fonction de recherche retourne le premier photographe dont l'ID correspond à l'ID spécifié
   return foundPhotographer;
 }
 
@@ -61,6 +59,7 @@ async function displayPhotographerData () {
   // Récupère le nom du photographe à partir de l'objet photographer
   const photographerName = photographer.name;
   // Utilise la fonction photographerFactory() pour créer un modèle de photographe basé sur l'objet photographer
+  /* eslint-disable no-undef */
   const photographerModel = photographerFactory(photographer);
   // Récupère l'élément du DOM avec l'ID 'photographer-container'
   const photographerContainer = document.getElementById('photographer-container');
@@ -239,7 +238,7 @@ async function displayPhotographerMedia () {
   const mediaElements = document.querySelectorAll('.photograph-article img,.photograph-article video,.photograph-article .media-title p ,.photograph-article .fa-heart');
   const lightboxElements = document.querySelectorAll('.lightbox, .lightbox_img_container,.lightbox_img, .lightbox_video, .lightbox_description, .lightbox_prev, .lightbox_next, .lightbox_close   ');
   // ajouter tabindex lightbox,
-  let footerLength = 2;
+  const footerLength = 2;
 
   filterElements.forEach((element, index) => {
     element.setAttribute('tabindex', index + headerForm.length + navbarLinks.length + articleElements.length + 1);
@@ -283,7 +282,6 @@ async function displayPhotographerDetails () {
   // Affiche l'encart en bas de page avec le tarif journalier et le nombre total de likes
   footerElement.innerHTML = `<p class="p-like">${totalLikes}<i class="fa-sharp fa-solid fa-heart"></i></p><p class="p-price">${photographerPrice}€ /jour</p> `;
 
-  const footer = document.querySelector('.footers');
   const footerElements = document.querySelectorAll('.p-like, .p-price');
   const navbarLinks = document.querySelectorAll('header nav a');
   const articleElements = document.querySelectorAll('.card-name, .card-city, .tagline-card, .contact_button, #img-card');
@@ -296,6 +294,11 @@ async function displayPhotographerDetails () {
 
   footerElements.forEach((element, index) => {
     element.setAttribute('tabindex', index + headerForm.length + navbarLinks.length + articleElements.length + filterElements.length + mediaElements.length + 1);
+    console.log(element);
+  });
+
+  lightboxElements.forEach((element, index) => {
+    element.setAttribute('tabindex', index + headerForm.length + navbarLinks.length + articleElements.length + filterElements.length + mediaElements.length + footerElements.length + 1);
     console.log(element);
   });
   console.log(footerElements.length);

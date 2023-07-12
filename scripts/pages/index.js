@@ -22,6 +22,7 @@ function displayData (photographers) {
   // Cette ligne utilise la méthode forEach pour itérer sur chaque élément du tableau des photographes
   photographers.forEach((photographer, index) => {
     // Cette ligne utilise une fonction appelée photographerFactory pour créer un modèle de photographe à partir des données du photographe actuel
+    /* eslint-disable no-undef */
     const photographerModel = photographerFactory(photographer, index);
     // Cette ligne utilise la méthode getUserCardDOM() du modèle de photographe pour obtenir l'élément DOM de la carte utilisateur
     const userCardDOM = photographerModel.getUserCardDOM();

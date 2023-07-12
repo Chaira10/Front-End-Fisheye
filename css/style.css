@@ -119,3 +119,7 @@ header {
     padding-left: 9px;
     padding-top: 7px;
 }
+
+.card-1 .img-container {
+    padding-left: 35px;
+}

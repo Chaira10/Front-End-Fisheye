@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 function MediaFactory (media, photographeId) {
   // Récupère un tableau des clés des données du média
   const props = Object.keys(media);
@@ -28,6 +29,7 @@ function MediaFactory (media, photographeId) {
     img.addEventListener('click', () => {
       lightbox.style.display = 'block';
       document.querySelector('.lightbox').focus();
+      /* eslint-disable no-undef */
       loadImage(TypeMedia, LinkImage, media.title);
     });
     img.addEventListener('keydown', (e) => {
@@ -52,6 +54,7 @@ function MediaFactory (media, photographeId) {
     // Ajoute un écouteur d'événement pour ouvrir la lightbox lors du clic ou de la touche Entrée
     video.addEventListener('click', () => {
       lightbox.style.display = 'block';
+      /* eslint-disable no-undef */
       loadImage(TypeMedia, LinkVideo, media.title);
     });
     video.addEventListener('keydown', (e) => {

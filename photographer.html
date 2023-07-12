@@ -1,72 +1,121 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <link href="css/photographer.css" rel="stylesheet" type="text/css" >
-    <script src="https://kit.fontawesome.com/13f98801db.js" crossorigin="anonymous" defer></script>
-    <title>Fisheye - photographe </title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/photographer.css" rel="stylesheet" type="text/css" />
+    <script
+      src="https://kit.fontawesome.com/13f98801db.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <title>Fisheye - photographe</title>
   </head>
   <body>
     <header>
       <nav>
         <a href="./index.html" class="logo-link" tabindex="0">
-          <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page" >
+          <img
+            src="assets/images/logo.png"
+            class="logo"
+            alt="Fisheye Home page"
+          />
         </a>
       </nav>
     </header>
     <main id="main">
       <div class="photograph-header" id="photographer-container">
-        <button class="contact_button" id="btn-contact" onclick="displayModal()" >Contactez-moi</button>
+        <button
+          class="contact_button"
+          id="btn-contact"
+          onclick="displayModal()"
+        >
+          Contactez-moi
+        </button>
       </div>
       <div id="contact_modal" role="dialog">
         <div class="modal">
           <div class="modal-title">
             <h2 id="title-modal"></h2>
-            <img src="assets/icons/close.svg" class="close" onclick="closeModal()" aria-label="Close Contact Form" alt="close modal">
+            <img
+              src="assets/icons/close.svg"
+              class="close"
+              onclick="closeModal()"
+              aria-label="Close Contact Form"
+              alt="close modal"
+            />
           </div>
           <form id="contact-form" method="post">
             <div>
               <label for="prenom">Prénom</label>
-              <input type="text" id="prenom" name="prenom" aria-label="First name">
+              <input
+                type="text"
+                id="prenom"
+                name="prenom"
+                aria-label="First name"
+              />
               <label for="nom">Nom</label>
-              <input type="text" id="nom" name="nom" aria-label="Last name">
+              <input type="text" id="nom" name="nom" aria-label="Last name" />
               <label for="email">Email</label>
-              <input type="email" id="email" name="email" aria-label="Email">
+              <input type="email" id="email" name="email" aria-label="Email" />
               <label for="msg">Votre message</label>
-              <textarea id="msg" name="msg" aria-label="Your message"></textarea>
+              <textarea
+                id="msg"
+                name="msg"
+                aria-label="Your message"
+              ></textarea>
             </div>
-            <button class="submit" type="submit" id="btn-submit" aria-label="Send">Envoyer</button>
+            <button
+              class="submit"
+              type="submit"
+              id="btn-submit"
+              aria-label="Send"
+            >
+              Envoyer
+            </button>
           </form>
         </div>
       </div>
       <div class="filter-container">
         <label for="sort-filter">Trier par </label>
         <select id="sort-filter">
-          <option value="popularity" class="option-1"  selected>Popularité</option>
-          
+          <option value="popularity" class="option-1" selected>
+            Popularité
+          </option>
+
           <option value="date" class="option-2">Date</option>
-          
+
           <option value="title">Titre</option>
         </select>
       </div>
       <div id="media-container"></div>
       <span id="footer" class="footers"></span>
 
-<div class="lightbox"  aria-label="Vue rapprochée de l'image ou de la vidéo">                   
-  <div class="lightbox_img_container" >
-     <img class="lightbox_img"  >
-     <video class="lightbox_video" controls   > </video>
-   </div>
-   <p class="lightbox_description" >descrition de l'image </p>
+      <div
+        class="lightbox"
+        aria-label="Vue rapprochée de l'image ou de la vidéo"
+      >
+        <div class="lightbox_img_container">
+          <img class="lightbox_img" />
+          <video class="lightbox_video" controls></video>
+        </div>
+        <p class="lightbox_description">descrition de l'image</p>
 
-   <button class="lightbox_prev"  aria-label="va à l'image précédente">  <i class="fa-solid fa-angle-left button_lightbox"></i></button>
-   <button class="lightbox_next"  aria-label="va à l'image suivante">  <i class="fa-solid fa-angle-right button_lightbox"></i></button>
-   <button class="lightbox_close"  aria-label="fermeture de la lightbox">  <i class="fa-solid fa-xmark button_lightbox"></i></button>
- </div>
-
+        <button class="lightbox_prev" aria-label="va à l'image précédente">
+          <i class="fa-solid fa-angle-left button_lightbox"></i>
+        </button>
+        <button class="lightbox_next" aria-label="va à l'image suivante">
+          <i class="fa-solid fa-angle-right button_lightbox"></i>
+        </button>
+        <button class="lightbox_close" aria-label="fermeture de la lightbox">
+          <i class="fa-solid fa-xmark button_lightbox"></i>
+        </button>
+      </div>
     </main>
 
     <script src="/scripts/pages/photographer.js"></script>
@@ -74,7 +123,5 @@
     <script src="scripts/factories/media.js"></script>
     <script src="/scripts/utils/lightbox.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
-
-
   </body>
 </html>
